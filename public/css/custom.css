@@ -1,0 +1,37 @@
+.search-query{
+	height: 27px;
+}
+
+#login_page{
+	width: 381px;
+}
+
+.account-container{
+	border: 0;
+	margin: 0px;
+	border-radius: 0px;
+    box-shadow: none;
+}
+
+.input_cont{
+	width: 324px;
+}
+
+body.auth_body{
+	background: #f9f9f9;
+
+}
+
+.error-text {
+    color: #d22c2c;
+}
+
+@media (max-width: 481px){
+	.input_cont .login-fields input{
+	width: 255px;
+	}
+
+	.account-container{
+		width:380px;
+	}
+}
