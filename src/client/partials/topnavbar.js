@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 class Topnavbar extends Component{
 
@@ -10,7 +11,7 @@ class Topnavbar extends Component{
 			  <div className="subnavbar-inner">
 			    <div className="container">
 			      <ul className="mainnav">
-			        <li className="active"><a href="index.html"><i className="icon-dashboard"></i><span>Dashboard</span> </a> </li>
+			        <li className="active"><Link to="/"><i className="icon-dashboard"></i><span>Dashboard</span> </Link> </li>
 			        <li><a href="reports.html"><i className="icon-list-alt"></i><span>Reports</span> </a> </li>
 			        <li><a href="guidely.html"><i className="icon-facetime-video"></i><span>App Tour</span> </a></li>
 			        <li><a href="charts.html"><i className="icon-bar-chart"></i><span>Charts</span> </a> </li>

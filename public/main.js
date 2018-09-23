@@ -25,7 +25,7 @@ const menuSetup = require('./../electronFunctions/partials/menu');
 
     // added the redux as a devtool
     BrowserWindow.addDevToolsExtension('/Users/phalaj/AppData/Local/Google/Chrome/User Data/Default/Extensions/lmhkpmbekcpmknklioeibfkpmmfibljd/2.15.3_0');
-    BrowserWindow.addDevToolsExtension('/Users/phalaj/AppData/Local/Google/Chrome/User Data/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/3.3.2_0');
+    BrowserWindow.addDevToolsExtension('/Users/phalaj/AppData/Local/Google/Chrome/User Data/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/3.4.0_0');
     win.webContents.openDevTools();
 
     let server = new BrowserWindow({show: true});

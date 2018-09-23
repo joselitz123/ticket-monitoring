@@ -3,13 +3,8 @@ const Schema = mongoose.Schema;
 const dbInstance = require('../../dbInstance');
 
 const userSchema = new Schema({
-    firstname: 'string',
-    lastname: 'string',
-    email: 'string',
-    pg_shortname: 'string',
-    snow_id: 'string',
+    name: 'string',
     username: 'string',
-    password: 'string',
     created_at: {type: 'date'},
     updated_at: {type: 'date'}
 });

@@ -11,6 +11,7 @@
     "electron-store": "^2.0.0",
     "express": "^4.16.3",
     "helmet": "^3.13.0",
+    "history": "^4.7.2",
     "jsonwebtoken": "^8.3.0",
     "mongodb": "^3.1.4",
     "mongoose": "^5.2.12",

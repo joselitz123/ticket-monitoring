@@ -45,7 +45,8 @@ module.exports = function (win){
         //changes the menu and sets/saves the token to local storage that was received from authentication
         ipcMain.on('isAuthenticated', (event, data)=>{
             setMenuToLoggedIn();
-            store.set('access_token', data);
+            // store.set('access_token', data);
+
         });
 
         function setMenuToLoggedIn(){

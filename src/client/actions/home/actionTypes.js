@@ -1,0 +1,1 @@
+export const SHOW_SNOW_AUTH = 'SHOW_SNOW_AUTH';

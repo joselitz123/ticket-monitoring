@@ -88,7 +88,7 @@ class LoginPage extends Component{
 	submitCredentials(){
 
 		const fields = this.state.fields;
-
+		this.setState({isLoading: true});
 		axios.post(`http://localhost:3000/auth/login`,{
 			username: fields.username.value,
 			password: fields.password.value
@@ -96,23 +96,23 @@ class LoginPage extends Component{
 		.then((data)=>{
 			
 			if (data.data.auth == true) {
-
+				this.setState({isLoading: false});
 				ipcRenderer.send('isAuthenticated', [data.data.token]);
 				ipcRenderer.send('close-login');
 
 			}else{
-
+				this.setState({isLoading: false});
 				
 
 			}
 		})
 		.catch((error)=>{
 			if (error.response == undefined) {
-
+				this.setState({isLoading: false});
 				this.setState({formError: 'An error occured while logging in'});				
 
 			}else{
-
+				this.setState({isLoading: false});
 				this.setState({formError: error.response.data.msg});
 
 			}
@@ -189,7 +189,7 @@ class LoginPage extends Component{
 								<label className="choice" htmlFor="Field">Keep me signed in</label>
 							</span> */}
 							
-							<button type="submit" style={{float: "right", width: 20} } className="button btn btn-success">{/*Sign In*/}<i className="icon-spin icon-spinner"></i></button>
+							<button type="submit" style={{float: "right", width: 70} } className="button btn btn-success">{this.state.isLoading == true ? <i className="icon-spinner icon-spin"></i> : "Sign In"}</button>
 							<button onClick={this.closeLoginForm} style={{float: "right", marginRight: 5}} type="button" className="button btn" >Cancel</button>
 						</div>
 						
