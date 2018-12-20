@@ -14,8 +14,8 @@ if (document.getElementById('login_page')) {
 	ReactDOM.render(<LoginPage />, document.getElementById('login_page'));
 }
 
-if (document.getElementById('root')) {
-	ReactDOM.render(<App />, document.getElementById('root'));	
+if (document.getElementById('react_target')) {
+	ReactDOM.render(<App />, document.getElementById('react_target'));	
 }
 
 registerServiceWorker();

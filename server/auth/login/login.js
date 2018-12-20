@@ -28,9 +28,12 @@ module.exports = function(req, res) {
                             created_at: Date.now()
                         });
 
-                        new_user.save();
+                        new_user.save()
+                        .then((data)=>{
+                            const token = jwt.sign({id: data.id}, process.env.JWT_SECRET, {expiresIn: process.env.JWT_EXPIRATION});
+                            res.status(200).send({auth: true});
+                        });
                         
-                        res.status(200).send({auth: true});
                     })
                     .catch(()=>{
                         res.status(404).send({auth: false, msg: 'error occured while fetching account name'})
@@ -38,7 +41,8 @@ module.exports = function(req, res) {
 
                     
                 }else{
-                    res.status(200).send({auth: true});
+                    const token = jwt.sign({id: data.id}, process.env.JWT_SECRET, {expiresIn: process.env.JWT_EXPIRATION});
+                    res.status(200).send({auth: true, token: token});
                 }
             })
             .catch((err)=>{

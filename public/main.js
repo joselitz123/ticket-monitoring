@@ -1,6 +1,7 @@
 const {app, BrowserWindow, Menu, ipcMain} = require('electron');
 const path = require('path');
 const menuSetup = require('./../electronFunctions/partials/menu');
+const notifications = require('../electronFunctions/partials/notification');
 
 
   // Keep a global reference of the window object, if you don't, the window will
@@ -15,7 +16,7 @@ const menuSetup = require('./../electronFunctions/partials/menu');
                             height: 900 ,
                             minWidth: 800, 
                             minHeight: 600, 
-                            icon: __dirname + '/img/ticket_monitor.ico'});
+                            icon: __dirname + '/img/Logo_raw.ico'});
   
     // and load the index.html of the app.
     win.loadFile('./public/index.html');
@@ -23,9 +24,12 @@ const menuSetup = require('./../electronFunctions/partials/menu');
     //run application menu setup
     menuSetup(win);
 
+    //import the notification functions
+    notifications();
+
     // added the redux as a devtool
-    BrowserWindow.addDevToolsExtension('/Users/phalaj/AppData/Local/Google/Chrome/User Data/Default/Extensions/lmhkpmbekcpmknklioeibfkpmmfibljd/2.15.3_0');
-    BrowserWindow.addDevToolsExtension('/Users/phalaj/AppData/Local/Google/Chrome/User Data/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/3.4.0_0');
+    BrowserWindow.addDevToolsExtension('/Users/phalaj/AppData/Local/Google/Chrome/User Data/Default/Extensions/lmhkpmbekcpmknklioeibfkpmmfibljd/2.16.5_0');
+    BrowserWindow.addDevToolsExtension('/Users/phalaj/AppData/Local/Google/Chrome/User Data/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/3.4.3_0');
     win.webContents.openDevTools();
 
     let server = new BrowserWindow({show: true});
@@ -48,7 +52,7 @@ const menuSetup = require('./../electronFunctions/partials/menu');
   // This method will be called when Electron has finished
   // initialization and is ready to create browser windows.
   // Some APIs can only be used after this event occurs.
-  app.on('ready', createWindow)
+  app.on('ready', createWindow);
   
   // Quit when all windows are closed.
   app.on('window-all-closed', () => {

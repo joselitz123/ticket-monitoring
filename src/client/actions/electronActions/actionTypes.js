@@ -1,0 +1,1 @@
+export const LOAD_TICKET_DATA  = 'LOAD_TICKET_DATA';

@@ -1,0 +1,4 @@
+-upon logging in, electron will inform backend to login and then fetch the update interval time.
+-Set the time to the interval function in order to begin right away the scraping of data and then save it to database.
+-After every saving of data from the database, backend would perform queries and any computation and then feed this to frontend.
+-Setup the frontend to display the received data from backend as user friendly visuals.

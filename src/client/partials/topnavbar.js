@@ -1,40 +1,64 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+// import { Link } from 'react-router-dom';
 
-class Topnavbar extends Component{
 
-	render(){
-
-		return(
-
-			<div className="subnavbar">
-			  <div className="subnavbar-inner">
-			    <div className="container">
-			      <ul className="mainnav">
-			        <li className="active"><Link to="/"><i className="icon-dashboard"></i><span>Dashboard</span> </Link> </li>
-			        <li><a href="reports.html"><i className="icon-list-alt"></i><span>Reports</span> </a> </li>
-			        <li><a href="guidely.html"><i className="icon-facetime-video"></i><span>App Tour</span> </a></li>
-			        <li><a href="charts.html"><i className="icon-bar-chart"></i><span>Charts</span> </a> </li>
-			        <li><a href="shortcodes.html"><i className="icon-code"></i><span>Shortcodes</span> </a> </li>
-			        <li className="dropdown"><a href="javascript:;" className="dropdown-toggle" data-toggle="dropdown"> <i className="icon-long-arrow-down"></i><span>Drops</span> <b className="caret"></b></a>
-			          <ul className="dropdown-menu">
-			            <li><a href="icons.html">Icons</a></li>
-			            <li><a href="faq.html">FAQ</a></li>
-			            <li><a href="pricing.html">Pricing Plans</a></li>
-			            <li><a href="login.html">Login</a></li>
-			            <li><a href="signup.html">Signup</a></li>
-			            <li><a href="error.html">404</a></li>
-			          </ul>
-			        </li>
-			      </ul>
-			    </div>
-			  </div>
-			</div>
-
-			)
-
-	}
-
-}
-
-export default Topnavbar;
+export default ()=>(
+    <nav className="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top " id="navigation-example">
+        <div className="container-fluid">
+        <div className="navbar-wrapper">
+            <a className="navbar-brand" href="javascript:void(0)">Dashboard</a>
+        </div>
+        <button className="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation" data-target="#navigation-example">
+            <span className="sr-only">Toggle navigation</span>
+            <span className="navbar-toggler-icon icon-bar"></span>
+            <span className="navbar-toggler-icon icon-bar"></span>
+            <span className="navbar-toggler-icon icon-bar"></span>
+        </button>
+        <div className="collapse navbar-collapse justify-content-end">
+            <form className="navbar-form">
+            <div className="input-group no-border">
+                <input type="text" value="" className="form-control" placeholder="Search..." />
+                <button type="submit" className="btn btn-default btn-round btn-just-icon">
+                <i className="material-icons">search</i>
+                <div className="ripple-container"></div>
+                </button>
+            </div>
+            </form>
+            <ul className="navbar-nav">
+            <li className="nav-item">
+                <a className="nav-link" href="javascript:void(0)">
+                <i className="material-icons">dashboard</i>
+                <p className="d-lg-none d-md-block">
+                    Stats
+                </p>
+                </a>
+            </li>
+            <li className="nav-item dropdown">
+                <a className="nav-link" href="javscript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i className="material-icons">notifications</i>
+                <span className="notification">5</span>
+                <p className="d-lg-none d-md-block">
+                    Some Actions
+                </p>
+                </a>
+                <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                <a className="dropdown-item" href="javascript:void(0)">Mike John responded to your email</a>
+                <a className="dropdown-item" href="javascript:void(0)">You have 5 new tasks</a>
+                <a className="dropdown-item" href="javascript:void(0)">You're now friend with Andrew</a>
+                <a className="dropdown-item" href="javascript:void(0)">Another Notification</a>
+                <a className="dropdown-item" href="javascript:void(0)">Another One</a>
+                </div>
+            </li>
+            <li className="nav-item">
+                <a className="nav-link" href="javascript:void(0)">
+                <i className="material-icons">person</i>
+                <p className="d-lg-none d-md-block">
+                    Account
+                </p>
+                </a>
+            </li>
+            </ul>
+        </div>
+        </div>
+    </nav>
+);

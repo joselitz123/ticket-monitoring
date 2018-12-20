@@ -1,5 +1,13 @@
 {
-  "presets": ["react", "env", "stage-0"],
-  "plugins": ["transform-decorators-legacy",
-	"transform-class-properties"]
+  "presets": ["@babel/preset-react", "@babel/preset-env"],
+  "plugins": [ [
+         "@babel/plugin-proposal-decorators",
+          {
+            "legacy": true
+          }
+        ],
+        "@babel/plugin-proposal-class-properties",
+        "@babel/plugin-proposal-function-bind"
+      ]
 }
+

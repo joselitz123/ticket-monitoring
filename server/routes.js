@@ -1,46 +1,45 @@
 const express = require('express');
 const router = express.Router();
-const path = require('path');
-const assert = require('assert');
+const logger = require('./logger/loggerSettings')();
 
+const loginUser = require('./puppeteerScrapes/accessAuthLaunch');
+const setCookieToBrowser = require('./puppeteerScrapes/setCookieToBrowser');
+const intervalFunctions = require('./intervalFunctions');
+const test = require('./dbQueries/forDataProviderQueries/ticketPriorityCount');
+const userAccount = require('./account');
 
-const allScrape = require('./puppeteerScrapes/allUsers/jose');
-const allScrape2 = require('./puppeteerScrapes/allUsers/jose').allScrape2;
-const isExistValue = require('./database/collections/users/read').isExistValue;
-const addUser = require('./auth/register/register');
-const loginUser = require('./auth/login/login');
+let access_token;
+let user;
 
+router.get('/auth/login', async function(req, res, next){
 
-
-router.get('/', function(req, res){
+	logger.info('Request to login and begin update in frontend', req.headers);
 	
-	res.send('Connection Established');
+	const response = await loginUser();
+
+	access_token = await response.browserCookies[0];
+
+	user = await response.user;
+
+	await userAccount(response.user);
+
+	logger.info(`Send out the user's data`, response.user);
+
+	res.send(JSON.stringify(response.user));
+
+	await setCookieToBrowser(access_token); //set the cookie to a new browser instance to be used for scraping data
+
+	await intervalFunctions(access_token, user);
 
 });
 
-router.get('/test', async function(req, res){
-	res.send(await allScrape());
-	
-})
+router.get('/tickets/alltickets', async function(req, res){
 
-router.get('/test2', async function(req, res){
-	res.send(await allScrape2());
-	
-})
+	const result = await test();
 
-router.post('/auth/register', async function(req, res){
-	 const webToken = await addUser(req);
-	 res.status(200).send({auth: true, token: webToken});
+	res.send(result);
+
 });
-
-router.post('/auth/login', async function(req, res){
-	await loginUser(req, res);
-});
-
-router.post('/auth/register/usernameisexist', async function(req, res){
-	res.send(await isExistValue(req.body.fieldname, req.body.fieldvalue));
-});
-
 
 
 module.exports = router;
