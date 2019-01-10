@@ -1,6 +1,6 @@
 const ticket_db = require('../../database/collections/tickets/ticket_model');
 const logger = require('../../logger/loggerSettings')();
-
+const userAcc = require('../../account').userAccount;
 
 
 
@@ -19,7 +19,9 @@ function insertScrapedTickets(data){
 
             const database = await ticket_db();
 
-            await database.remove({created_at: date})
+            const user_acc = userAcc();
+
+            await database.remove({user_id: user_acc.id})
             .then(data=>{
                 logger.trace('removed successfully the old details of the ticket', data)
             })

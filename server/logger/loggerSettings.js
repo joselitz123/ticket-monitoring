@@ -1,6 +1,9 @@
 const pino = require('pino');
 const path = require('path');
 
+/**
+ * Log setup
+ */
 module.exports = function loggerSettings(){
 
         const logger = pino({

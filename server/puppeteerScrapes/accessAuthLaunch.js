@@ -156,7 +156,7 @@ module.exports = function() {
             
         } catch (error) {
 
-            logger.error('An issue occured while trying to login', error);
+            logger.error(error, 'An issue occured while trying to login');
 
         }
     });

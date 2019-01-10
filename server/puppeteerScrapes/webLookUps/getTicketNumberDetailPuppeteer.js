@@ -15,9 +15,9 @@ function getTicketNumberDetail(ticketNumber){
 
             const page = await browser.newPage();
 
-            await page.goto(`https://pgglobalenterprise.service-now.com/task_list.do?sysparm_view=&sysparm_first_row=1&sysparm_query=active%3Dtrue%5EGOTO${ ticketNumber }%3DINC2154082&sysparm_clear_stack=true`);
+            await page.goto(`https://pgglobalenterprise.service-now.com/task_list.do?sysparm_view=&sysparm_first_row=1&sysparm_query=active%3Dtrue%5EGOTOnumber%3D${ticketNumber}&sysparm_clear_stack=true`);
 
-            resolve(page.content());
+            resolve(await page.content());
 
             await page.close();
             

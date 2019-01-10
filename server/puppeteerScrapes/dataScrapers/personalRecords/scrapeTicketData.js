@@ -1,11 +1,14 @@
 const cheerio = require('cheerio');
 const logger = require('../../../logger/loggerSettings')();
+const _ = require('lodash')
 const personalRecordPuppeteer = require('../../webLookUps/personalRecords/personalRecordPuppeteer');
 const getTicketNumberDetailPuppeteer = require('../../webLookUps/getTicketNumberDetailPuppeteer');
 const fetchTicketApplication = require('../../../dbQueries/forScrapeQueries/fetchTicketApplications');
 const fetchTicketPriorities = require('../../../dbQueries/forScrapeQueries/fetchTicketPriorities');
 const getAutoTickets = require('../../../dbQueries/forScrapeQueries/fetchAutoTickets');
 const insertScrapedTickets = require('../../../dbQueries/forScrapeQueries/insertScrapedTickets');
+
+
 /**
  * Gets the ticket records from Service Now
  * @param {Object} cookies 
@@ -26,7 +29,9 @@ function scrapeOwnedTicketData(cookies, user){
 
             const autoTickets = await scrapeAutoTickets(auto_tickets, user);
 
-            tickets.push(...autoTickets);
+            tickets.push(...autoTickets[0]);
+
+            const nonDuplicatedData = await _.uniqBy(...autoTickets, 'tckt_nmbr');
 
             await insertScrapedTickets(tickets);
 
@@ -36,7 +41,7 @@ function scrapeOwnedTicketData(cookies, user){
 
             logger.error(error, 'An error occurred while trying to Scrape own data');   
 
-            reject(error);
+            reject();
             
         }
         
@@ -65,19 +70,19 @@ function scrapeAutoTickets(auto_tickets, user){
 
                 }, []);
 
-                Promise.all([scrapeCalls])
-                .then((values)=>{
+                Promise.all(scrapeCalls)
+                .then((values)=>{                
 
                     const extractCalls = values.reduce((accumulator, currentValue)=>{
 
-                        return [...accumulator, scrapeTicketData(currentValue, user)];
+                        return [...accumulator, scrapeTicketData([currentValue], user)];
 
                     },[]);
 
                     Promise.all(extractCalls)
                     .then((extractedData)=>{
 
-                        logger.debug('extracted the latest data of the autotickets');
+                        logger.debug(extractedData, 'extracted the latest data of the autotickets');
 
                         resolve(extractedData);
 
@@ -222,6 +227,8 @@ function scrapeTicketData(pages, user){
                     const extractedTicket = filteredIndex.reduce((totalColumns, column, index)=>{
                         
                         const extract = $(this).find('td').eq(column).text();
+
+                        logger.debug('data got per column for auto ticket scraping',extract);
                         
                         switch (columnKey[index]) {
 
@@ -266,7 +273,7 @@ function scrapeTicketData(pages, user){
                 });
             });
 
-            logger.info('Tickets scraped recently from SNow of the user user', tickets);
+            logger.info('Tickets scraped recently from SNow of the user', tickets);
 
             resolve(tickets);
 
@@ -284,3 +291,4 @@ function scrapeTicketData(pages, user){
 
 
 module.exports = scrapeOwnedTicketData;
+module.exports.scrapeAutoTickets = scrapeAutoTickets;

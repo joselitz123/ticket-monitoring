@@ -2,6 +2,9 @@ const logger = require('../../logger/loggerSettings')();
 const applications_model = require('../../database/collections/applications/applications_model');
 const { userAccount } = require('../../account');
 
+/**
+ * Queries the total ticket per application for the user
+ */
 async function AppTicketCount (){
 
     try {
