@@ -1,20 +1,23 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 import { loadTicketData } from '../actions/electronActions/actions';
 import TicketPriorityBoard from './ticketPriorityBoard/ticketPriorityBoard';
 import DoughnutGraph from './graphs/doughnutGraph';
+import PieGraphModal from './modals/pieGraphModal/pieGraphModal';
 
 const HomeLayout = ()=>{
 		
 
 		return (
 			<div className="content">
+
 				<div className="container-fluid">
 					<TicketPriorityBoard />
-				
+
 				<div className="row">
 					<DoughnutGraph />
+					<PieGraphModal />
 					<div className="col-lg-6 col-md-12">
 					<div className="card">
 						<div className="card-header card-header-primary">

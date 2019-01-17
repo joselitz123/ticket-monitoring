@@ -1,23 +1,25 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { alterCurrentUsername } from '../actions/sidebar/actions';
 import PropTypes from 'prop-types';
 const { ipcRenderer } = window.require('electron');
 
 
-
-const Sidebar = ({user_name, alterCurrentUsername})=>{
+const Sidebar = ({ user, alterCurrentUsername })=>{
 
     ipcRenderer.on('loadUserInfo', (event, data)=>{
-        
+
+        console.log({data: data});
+
         alterCurrentUsername(data);
+        
     });
 
     return (
     <div className="sidebar" data-color="purple" data-background-color="black" data-image="assets/img/sidebar-2.jpg">
         <div className="logo">
             <a href="http://www.creative-tim.com" className="simple-text logo-normal">
-                {user_name}
+                { user }
             </a>
         </div>
         <div className="sidebar-wrapper">
@@ -72,14 +74,14 @@ const Sidebar = ({user_name, alterCurrentUsername})=>{
 
 
 
-const mapStateToProps = state =>({
-    user_name: state.setUserName.accountName
-});
-
 Sidebar.propTypes = {
-    user_name: PropTypes.string.isRequired,
+    user: PropTypes.string.isRequired,
     alterCurrentUsername: PropTypes.func.isRequired
 }
+
+const mapStateToProps = state => ({
+    user: state.setUserName.accountName,
+})
 
 
 export default connect(mapStateToProps, { alterCurrentUsername })(Sidebar);

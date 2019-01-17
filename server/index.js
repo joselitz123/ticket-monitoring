@@ -7,11 +7,16 @@ const socketRoutes = require(path.resolve(__dirname, '../server/socketRoutes'));
 const router = require(path.resolve(__dirname, '../server/routes'));
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
+const graphqlHTTP = require('express-graphql');
+
 require('dotenv').config();
 
 socketRoutes(io);
 
 app.use(helmet());
+// app.use('/graphql', graphqlHTTP({
+
+// }))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 

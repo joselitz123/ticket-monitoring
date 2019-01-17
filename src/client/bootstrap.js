@@ -7,6 +7,7 @@ import store from './store';
 import Sidebar from './partials/sidebar';
 import Topnavbar from './partials/topnavbar';
 import Footer from './partials/footer';
+import { ApolloProvider } from 'react-apollo';
 
 const history = createMemoryHistory();
 

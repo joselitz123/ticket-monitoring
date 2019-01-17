@@ -25,7 +25,7 @@ function getAutoTickets(userData){
     
             logger.trace('Fetched data from the query getAutoTickets', recent_date);
     
-            if (recent_date != null ) {
+            if (recent_date.length != 0 ) {
     
                 const converted_date = new Date(recent_date[0].max).toISOString();
     
@@ -50,7 +50,7 @@ function getAutoTickets(userData){
             
         } catch (error) {
             
-            logger.error('Issue occured while running the database query for auto tickets', error);
+            logger.error(error, 'Issue occured while running the database query for auto tickets');
 
             reject();
     

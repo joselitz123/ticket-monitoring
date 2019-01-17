@@ -2,7 +2,7 @@ import { POPULATE_LOGGEDIN_USER } from '../../actions/sidebar/actionTypes';
 
 
 const initialState = {
-    accountName: 'Please login first',
+    accountName: 'Please login firsts',
     accountShortName: ''
 }
 

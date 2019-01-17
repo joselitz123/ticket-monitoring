@@ -3,6 +3,7 @@ import { Sector, Cell ,ResponsiveContainer, Legend, PieChart, Pie } from 'rechar
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { loadAppTicketCount, setActiveIndex } from '../../actions/home/doughnutActions';
+import { ShowModal, HideModal } from '../../actions/home/doughnutGraphActions/actions';
 import io from 'socket.io-client';
 
 
@@ -11,6 +12,14 @@ import io from 'socket.io-client';
  */
 
 class DoughnutGraph extends Component{
+        constructor(props){
+
+            super(props);
+
+            this.renderActiveShape = this.renderActiveShape.bind(this);
+
+            this.showDatabyModal = this.showDatabyModal.bind(this);
+        }
 
       componentDidMount(){
 
@@ -41,6 +50,14 @@ class DoughnutGraph extends Component{
         return false
       }
    
+      showDatabyModal(props){
+
+        this.props.ShowModal();
+
+        console.log({props: props});
+
+      }
+
 
         renderActiveShape(props){
         const RADIAN = Math.PI / 180;
@@ -98,9 +115,10 @@ class DoughnutGraph extends Component{
                             <h4 className="card-title">Ticket Doughnut Graph</h4>
                         </div>
                         <div className="card-body">
+                            <button className="btn btn-primary" onClick={this.showDatabyModal}>TEST Modal</button>
                             <ResponsiveContainer width="100%" height={400} >
                                 <PieChart >
-                                    <Pie data={this.props.appData} activeShape={this.renderActiveShape} activeIndex={this.props.activeIndex} dataKey="total_tickets" nameKey="app_name" cx="50%" cy="50%" innerRadius={50}  outerRadius={120} onMouseEnter={this.props.setActiveIndex} >
+                                    <Pie data={this.props.appData} activeShape={this.renderActiveShape} onClick={this.showDatabyModal} activeIndex={this.props.activeIndex} dataKey="total_tickets" nameKey="app_name" cx="50%" cy="50%" innerRadius={50}  outerRadius={120} onMouseEnter={this.props.setActiveIndex} >
                                         {this.props.appData.map((data, index)=>{
 
                                             return <Cell key={`cell-${index}`} fill={this.props.fillColor[index]} stroke="#202940" />
@@ -131,7 +149,8 @@ const mapStateToProps = state =>({
 DoughnutGraph.propTypes = {
     appData: PropTypes.array.isRequired,
     fillColor: PropTypes.array.isRequired,
-    loadAppTicketCount: PropTypes.func.isRequired
+    loadAppTicketCount: PropTypes.func.isRequired,
+    ShowModal: PropTypes.func.isRequired
 }
 
-export default connect(mapStateToProps, { loadAppTicketCount, setActiveIndex })(DoughnutGraph);
+export default connect(mapStateToProps, { loadAppTicketCount, setActiveIndex, ShowModal})(DoughnutGraph);

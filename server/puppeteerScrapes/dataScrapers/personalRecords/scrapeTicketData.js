@@ -29,11 +29,11 @@ function scrapeOwnedTicketData(cookies, user){
 
             const autoTickets = await scrapeAutoTickets(auto_tickets, user);
 
-            tickets.push(...autoTickets[0]);
+            tickets.push(...autoTickets);
 
-            const nonDuplicatedData = await _.uniqBy(...autoTickets, 'tckt_nmbr');
+            const nonDuplicatedTickets = await _.uniqBy(tickets, 'tckt_nmbr');
 
-            await insertScrapedTickets(tickets);
+            await insertScrapedTickets(nonDuplicatedTickets);
 
             resolve();
 
@@ -227,8 +227,6 @@ function scrapeTicketData(pages, user){
                     const extractedTicket = filteredIndex.reduce((totalColumns, column, index)=>{
                         
                         const extract = $(this).find('td').eq(column).text();
-
-                        logger.debug('data got per column for auto ticket scraping',extract);
                         
                         switch (columnKey[index]) {
 
