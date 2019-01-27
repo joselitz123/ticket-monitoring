@@ -26,6 +26,8 @@ function socketDataProviders(user_acc){
             resolve();
             
         } catch (error) {
+
+            logger.error(error, 'An issue occured while running socketDataProviders');
             
             reject(error);
 

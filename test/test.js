@@ -1,31 +1,39 @@
 var assert = require('assert');
 
-const testFunc = require('../server/puppeteerScrapes/accessPoint');
-const scrapeAutoTickets = require('../server/puppeteerScrapes/dataScrapers/personalRecords/scrapeTicketData').scrapeAutoTickets;
+const ticket_status_query = require('../server/dbQueries/forDataProviderQueries/appTickets');
 
 describe('Array', function() {
 
-    it('should have data', async ()=>{
+    it('should have data', async (done)=>{
 
-        const user_data = {
-            _id: '5bd6221d4dade63138a5c0c5'
-        }
+        // const result = await ticket_status_query('5c0894b10d1d233558a179df');
 
-        const result = await testFunc(user_data);
-        
-        const autoTickets = [{tckt_nmbr: 'INC2343485'}]
+        // console.log(JSON.stringify(result, null, 1));
 
-        const user = {
-            _id: "5bd6221d4dade63138a5c0c5",
-            name: "JoseLito Phala",
-            shortname: "phala.jl",
-        }
+        // assert.notEqual(result.length, 0);
 
-        const data = await scrapeAutoTickets(autoTickets, user);
+        var p1 = new Promise((resolve, reject) => { 
+            setTimeout(() => resolve('one'), 1000); 
+          }); 
+          var p2 = new Promise((resolve, reject) => { 
+            setTimeout(() => resolve('two'), 2000); 
+          });
+          var p3 = new Promise((resolve, reject) => {
+            setTimeout(() => resolve('three'), 3000);
+          });
+          var p4 = new Promise((resolve, reject) => {
+            setTimeout(() => resolve('four'), 4000);
+          });
 
-        console.log(JSON.stringify(data, null, 1));
+          Promise.all([p1, p2, p3, p4])
+          .then(values => { 
+            console.log(values);
+          })
+          .catch(error => { 
+            console.log(error.message)
+          });
 
-        assert.notEqual(result.length != 0);
+          done();
 
     });
   

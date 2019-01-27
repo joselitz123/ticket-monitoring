@@ -102,7 +102,7 @@ const HomeLayout = ()=>{
 									<td>
 									<div className="form-check">
 										<label className="form-check-label">
-										<input className="form-check-input" type="checkbox" value="" defaultChecked />
+										<input className="form-check-input" type="checkbox"  defaultChecked />
 										<span className="form-check-sign">
 											<span className="check"></span>
 										</span>
@@ -123,7 +123,7 @@ const HomeLayout = ()=>{
 									<td>
 									<div className="form-check">
 										<label className="form-check-label">
-										<input className="form-check-input" type="checkbox" value="" />
+										<input className="form-check-input" type="checkbox"  />
 										<span className="form-check-sign">
 											<span className="check"></span>
 										</span>
@@ -144,7 +144,7 @@ const HomeLayout = ()=>{
 									<td>
 									<div className="form-check">
 										<label className="form-check-label">
-										<input className="form-check-input" type="checkbox" value="" />
+										<input className="form-check-input" type="checkbox"  />
 										<span className="form-check-sign">
 											<span className="check"></span>
 										</span>
@@ -166,7 +166,7 @@ const HomeLayout = ()=>{
 									<td>
 									<div className="form-check">
 										<label className="form-check-label">
-										<input className="form-check-input" type="checkbox" value="" defaultChecked />
+										<input className="form-check-input" type="checkbox"  defaultChecked />
 										<span className="form-check-sign">
 											<span className="check"></span>
 										</span>
@@ -193,7 +193,7 @@ const HomeLayout = ()=>{
 									<td>
 									<div className="form-check">
 										<label className="form-check-label">
-										<input className="form-check-input" type="checkbox" value="" defaultChecked />
+										<input className="form-check-input" type="checkbox"  defaultChecked />
 										<span className="form-check-sign">
 											<span className="check"></span>
 										</span>
@@ -215,7 +215,7 @@ const HomeLayout = ()=>{
 									<td>
 									<div className="form-check">
 										<label className="form-check-label">
-										<input className="form-check-input" type="checkbox" value="" />
+										<input className="form-check-input" type="checkbox"  />
 										<span className="form-check-sign">
 											<span className="check"></span>
 										</span>
@@ -242,7 +242,7 @@ const HomeLayout = ()=>{
 									<td>
 									<div className="form-check">
 										<label className="form-check-label">
-										<input className="form-check-input" type="checkbox" value="" />
+										<input className="form-check-input" type="checkbox"  />
 										<span className="form-check-sign">
 											<span className="check"></span>
 										</span>
@@ -263,7 +263,7 @@ const HomeLayout = ()=>{
 									<td>
 									<div className="form-check">
 										<label className="form-check-label">
-										<input className="form-check-input" type="checkbox" value="" defaultChecked />
+										<input className="form-check-input" type="checkbox"  defaultChecked />
 										<span className="form-check-sign">
 											<span className="check"></span>
 										</span>
@@ -285,7 +285,7 @@ const HomeLayout = ()=>{
 									<td>
 									<div className="form-check">
 										<label className="form-check-label">
-										<input className="form-check-input" type="checkbox" value="" defaultChecked />
+										<input className="form-check-input" type="checkbox"  defaultChecked />
 										<span className="form-check-sign">
 											<span className="check"></span>
 										</span>

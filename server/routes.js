@@ -7,6 +7,7 @@ const setCookieToBrowser = require('./puppeteerScrapes/setCookieToBrowser');
 const intervalFunctions = require('./intervalFunctions');
 const test = require('./dbQueries/forDataProviderQueries/ticketPriorityCount');
 const userAccount = require('./account');
+const perAppTicketComponent = require('./components/appTicketComponents/PerAppTicketComponent');
 
 let access_token;
 let user;
@@ -27,11 +28,13 @@ router.get('/auth/login', async function(req, res, next){
 
 	res.send(JSON.stringify(response.user));
 
-	await setCookieToBrowser(access_token); //set the cookie to a new browser instance to be used for scraping data
+	// await setCookieToBrowser(access_token); //set the cookie to a new browser instance to be used for scraping data
 
 	await intervalFunctions(access_token, user);
 
 });
+
+router.get('/applications/:app_id/tickets', function(req, res){ perAppTicketComponent(req, res) });
 
 router.get('/tickets/alltickets', async function(req, res){
 

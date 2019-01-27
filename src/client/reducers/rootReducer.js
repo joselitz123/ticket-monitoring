@@ -2,12 +2,14 @@ import { combineReducers } from 'redux';
 import setUserName from './sidebar/sidebarReducer';
 import setPriorityTotal from './home/homeReducer';
 import setAppTicketCount from './home/doughnutGraphReducer';
-import toggleModal from './home/modals/pieGraphReducer/pieGrahpReducer';
+import toggleModalForPieGraph from './home/modals/pieGraphReducer/pieGrahpReducer';
+import setPieGraphTableData from './home/tables/pieGraphTable/tableReducer';
 
 
 export default combineReducers({
     setUserName: setUserName,
     setPiorityTotal: setPriorityTotal,
     setAppTicketCount: setAppTicketCount,
-    toggleModal: toggleModal
+    toggleModalForPieGraph: toggleModalForPieGraph,
+    setPieGraphTableData: setPieGraphTableData
 });

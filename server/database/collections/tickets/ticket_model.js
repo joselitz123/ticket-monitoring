@@ -9,7 +9,7 @@ const ticketSchema = new Schema({
     task_type: 'String',
     conf_item: 'String',
     app_id: { type: Schema.Types.ObjectId},
-    status: 'String',
+    status_id: { type: Schema.Types.ObjectId},
     ticket_priority_id: { type: Schema.Types.ObjectId, ref: 'Tckt_priorities' },
     ass_to: 'String',
     ass_group: 'String',

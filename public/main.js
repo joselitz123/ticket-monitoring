@@ -30,7 +30,6 @@ const notifications = require('../electronFunctions/partials/notification');
     // added the redux as a devtool
     BrowserWindow.addDevToolsExtension('/Users/jphala/AppData/Local/Google/Chrome/User Data/Default/Extensions/lmhkpmbekcpmknklioeibfkpmmfibljd/2.17.0_0');
     BrowserWindow.addDevToolsExtension('/Users/jphala/AppData/Local/Google/Chrome/User Data/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/3.6.0_0');
-    BrowserWindow.addDevToolsExtension('/Users/jphala/AppData/Local/Google/Chrome/User Data/Default/Extensions/jdkknkkbebbapilgoeccciglkfbmbnfm/2.1.5_0');
     win.webContents.openDevTools();
 
     let server = new BrowserWindow({show: true});

@@ -3,7 +3,9 @@ import { Sector, Cell ,ResponsiveContainer, Legend, PieChart, Pie } from 'rechar
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { loadAppTicketCount, setActiveIndex } from '../../actions/home/doughnutActions';
-import { ShowModal, HideModal } from '../../actions/home/doughnutGraphActions/actions';
+import { ShowModal, setAppName } from '../../actions/home/doughnutGraphActions/actions';
+import { setFetchedTickets, setFetchFailed, setFetchingStatus } from '../../actions/home/tables/pieGraphTable/actions';
+import axios from 'axios';
 import io from 'socket.io-client';
 
 
@@ -49,12 +51,25 @@ class DoughnutGraph extends Component{
 
         return false
       }
-   
+
       showDatabyModal(props){
 
+        this.props.setAppName(props); // Sets the application name and ID
         this.props.ShowModal();
+        this.props.setFetchingStatus(true);
+        axios.get(`http://localhost:3000/applications/${ props._id }/tickets`)
+        .then(data => {
 
-        console.log({props: props});
+            this.props.setFetchedTickets(data.data.data);
+            this.props.setFetchingStatus(false);
+
+        })
+        .catch(err => {
+
+            this.props.setFetchFailed(err);            
+            this.props.setFetchingStatus(false);
+
+        });
 
       }
 
@@ -115,7 +130,7 @@ class DoughnutGraph extends Component{
                             <h4 className="card-title">Ticket Doughnut Graph</h4>
                         </div>
                         <div className="card-body">
-                            <button className="btn btn-primary" onClick={this.showDatabyModal}>TEST Modal</button>
+                            {/* <button className="btn btn-primary" onClick={this.showDatabyModal}>TEST Modal</button> */}
                             <ResponsiveContainer width="100%" height={400} >
                                 <PieChart >
                                     <Pie data={this.props.appData} activeShape={this.renderActiveShape} onClick={this.showDatabyModal} activeIndex={this.props.activeIndex} dataKey="total_tickets" nameKey="app_name" cx="50%" cy="50%" innerRadius={50}  outerRadius={120} onMouseEnter={this.props.setActiveIndex} >
@@ -150,7 +165,19 @@ DoughnutGraph.propTypes = {
     appData: PropTypes.array.isRequired,
     fillColor: PropTypes.array.isRequired,
     loadAppTicketCount: PropTypes.func.isRequired,
-    ShowModal: PropTypes.func.isRequired
+    ShowModal: PropTypes.func.isRequired,
+    setAppName: PropTypes.func.isRequired,
+    setFetchedTickets: PropTypes.func.isRequired,
+    setFetchFailed: PropTypes.func.isRequired,
+    setFetchingStatus: PropTypes.func.isRequired
 }
 
-export default connect(mapStateToProps, { loadAppTicketCount, setActiveIndex, ShowModal})(DoughnutGraph);
+export default connect(mapStateToProps, { 
+                                        loadAppTicketCount, 
+                                        setActiveIndex, 
+                                        ShowModal, 
+                                        setAppName,
+                                        setFetchedTickets,
+                                        setFetchFailed,
+                                        setFetchingStatus
+                                    })(DoughnutGraph);

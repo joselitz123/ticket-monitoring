@@ -3,7 +3,7 @@ const puppeteer = require('puppeteer');
 const user_model = require('../database/collections/users/user_model');
 const logger = require('../logger/loggerSettings')();
 const _ = require('lodash');
-
+const puppeteerInstance = require('./launchPuppeteer');
 
 /**
  * Launches the authentication and other setup to begin data scraping
@@ -13,31 +13,31 @@ module.exports = function() {
     return new Promise(async(resolve, reject)=>{
         try {
 
-            browser = await puppeteer.launch({args: [`--proxy-server='direct://'`, `--proxy-bypass-list=*`], headless: false});
+            browser = await puppeteerInstance();
 
             const page = await browser.newPage();
             
             await page.setViewport({width: 1600, height: 800});
+
             
             await page.goto('https://pgglobalenterprise.service-now.com/auth_redirect.do?sysparm_url=https%3A%2F%2Ffedauth.pg.com%2Fidp%2FSSO.saml2%3FSAMLRequest%3DnVJNT9swGP4rke9JmtA1qdVU6lpNVCoQkW6H3dz4dWrJsY1fp8C%252FJ7hFwAE07Wo%252Ffj69QNar3NLV4I%252F6Hh4GQB899UojPd9UZHCaGoYSqWY9IPUtbVY3O5onE2qd8aY1ikQrRHBeGr02GoceXAPuJFv4fb%252BryNF7izRNbdcpc2AKtAdnnURI8AyLtXlMWtOnmp0s6yDhhkSb0YzU7JX1nUMAZ6PZxHYBL7lNm%252BYuCW5J9Mu4FkKYigimEEi03VSkuV0X5VzA1VwIcTWdsZnI57OymB54UfCSTw7tCMSaIcoTvD9FHGCr0TPtK5JPsiLO8jib7yclzTP6I0%252Bms%252FIviepLDT%252Bl5lJ333d2OIOQXu%252F3dVzfNftAcJIc3O2I%252Fu%252B6%252FoDDUNWoQpaL0AgNEdzHSb93x952JMt%252Ft7FIP4pdpC19TbPd1EbJ9jlaKWUe1w6YHxN6N0AYq2f%252Baz9ZkoUTyWMRoHTQaKGVQgIn6fIi%252B%252Fn3Ll8A%26RelayState%3Dhttps%253A%252F%252Fpgglobalenterprise.service-now.com%252Fnavpage.do', {timeout: 0}).catch(err=>{
                 
-                logger.error('Error occured while navigating login page of SNow', err);
+                logger.error(err, 'Error occured while navigating login page of SNow');
 
             });
 
-            
+            // await page.setRequestInterception(false); // disable request interception due to bug that affected the processing
             await page.on('framenavigated', async ()=>{
                 
                 if (page.url().indexOf('https://pgglobalenterprise.service-now.com/external_logout_complete.do') != -1) {
 
                     await page.goto('https://pgglobalenterprise.service-now.com/nav_to.do?uri=%2Fhome.do', {timeout: 0})
                         .catch((err)=>{
-                            
-                            logger.error(err, 'Issue encountered maybe due to network');
-                            console.log(`An error occured ${err}`);
+                        
 
                         });
-
+                    
+                        
                     await page.waitFor('.navpage-header-content > .dropdown > #user_info_dropdown > div > .user-name', {timeout: 0}).catch(err=>{
                         logger.error(err, `Issue encountered while fetching the user's name`);
                     });
@@ -121,7 +121,7 @@ module.exports = function() {
 
                                 });
 
-                                await browser.close();
+                                await page2.close();
                                 
 
                             }else{
@@ -135,7 +135,7 @@ module.exports = function() {
 
                     }else{
                         
-                        await browser.close();
+                        await page.close();
 
                         resolve({
                                 browserCookies: browserCookies, 

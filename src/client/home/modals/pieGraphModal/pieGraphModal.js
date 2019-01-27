@@ -1,30 +1,43 @@
-import React from 'react';
+import React, { Component, createRef, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
 import { HideModal } from '../../../actions/home/doughnutGraphActions/actions';
+import DataTable from './datatable';
+import LoadingData from '../../../partials/loaderComponents/loadingData';
 
-const PieGraphModal = ({toggleModal, HideModal}) => {
 
-    // $('#exampleModal').modal('show');
-    
-    return <Modal isOpen={toggleModal} toggle={HideModal} >
-                <ModalHeader toggle={HideModal} >Hello World</ModalHeader>
-                <ModalBody>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</ModalBody>
-                <ModalFooter>
-                    <Button color="primary">Save</Button>
-                    <Button color="secondary" onClick={HideModal} >Close</Button>
-                </ModalFooter>
-            </Modal>
+
+const PieGraphModal = ({toggleModal, HideModal, modalName, isFetching}) => {
+
+    return (
+    <Modal isOpen={toggleModal} toggle={HideModal} size="lg" centered={true} >
+        <ModalHeader toggle={HideModal} >
+            Active Tickets for {modalName}
+        </ModalHeader>
+        <ModalBody>
+            {isFetching ? <LoadingData></LoadingData> : <DataTable />}
+        </ModalBody>
+        <ModalFooter>
+            <Button color="secondary" onClick={HideModal} >Close</Button>
+        </ModalFooter>
+    </Modal>  
+    )
+
 }
+
 
 PieGraphModal.propTypes = {
     toggleModal: PropTypes.bool.isRequired,
-    HideModal: PropTypes.func.isRequired
+    HideModal: PropTypes.func.isRequired,
+    modalName: PropTypes.string.isRequired,
+    isFetching: PropTypes.bool.isRequired
 }
 
 const mapStateToProps = state => ({
-    toggleModal: state.toggleModal.modal_visibility
+    toggleModal: state.toggleModalForPieGraph.modal_visibility,
+    modalName: state.toggleModalForPieGraph.modal_name,
+    isFetching: state.setPieGraphTableData.is_fetching
 });
 
 export default connect(mapStateToProps, { HideModal })(PieGraphModal);

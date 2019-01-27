@@ -3,7 +3,9 @@ const path = require('path');
 
 let puppeteerInstance;
 
-
+/**
+ * Returns a puppeteer instance that is a chromium browser
+ */
 module.exports = function () {
     
     return new Promise(async (resolve)=>{

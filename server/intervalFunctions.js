@@ -1,4 +1,5 @@
 const user_setting_model = require('./database/collections/user_settings/user_settings_model');
+const logger = require('./logger/loggerSettings')();
 const scrapePersonalRecord = require('./puppeteerScrapes/dataScrapers/personalRecords/scrapeTicketData');
 const socketDataProviders = require('./socketDataProviders/socketFunctions');
 
@@ -24,6 +25,8 @@ function getIntervalSettings (user_data){
             // resolve();
             
         } catch (error) {
+
+            logger.error(error, "An issue occured while initializing interval settings");
 
             reject(error);
 
@@ -62,7 +65,7 @@ async function intervalFunctions(accessToken, userData){
     
             } catch (error) {
     
-                console.log(error);
+                logger.error(error, "An issue occured while running interval functions ");
                 
             }
             
@@ -70,8 +73,8 @@ async function intervalFunctions(accessToken, userData){
         }, interval);
 
     } catch (error) {
-        
-        console.log(error);
+
+        logger.error(error, "An issue occured while running interval functions ");
 
     }
 

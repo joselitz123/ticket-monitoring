@@ -1,13 +1,10 @@
-const cheerio = require('cheerio');
 const logger = require('../../../logger/loggerSettings')();
 const _ = require('lodash')
 const personalRecordPuppeteer = require('../../webLookUps/personalRecords/personalRecordPuppeteer');
 const getTicketNumberDetailPuppeteer = require('../../webLookUps/getTicketNumberDetailPuppeteer');
-const fetchTicketApplication = require('../../../dbQueries/forScrapeQueries/fetchTicketApplications');
-const fetchTicketPriorities = require('../../../dbQueries/forScrapeQueries/fetchTicketPriorities');
 const getAutoTickets = require('../../../dbQueries/forScrapeQueries/fetchAutoTickets');
 const insertScrapedTickets = require('../../../dbQueries/forScrapeQueries/insertScrapedTickets');
-
+const scrapeTicketDataConsumer = require('./subcomponent/scrapeTicketDataConsumer');
 
 /**
  * Gets the ticket records from Service Now
@@ -23,7 +20,7 @@ function scrapeOwnedTicketData(cookies, user){
 
             const pages = await personalRecordPuppeteer(cookies, user);
 
-            tickets = await scrapeTicketData(pages, user);
+            tickets = await scrapeTicketDataConsumer(pages, user);
 
             const auto_tickets = await getAutoTickets(user);
 
@@ -121,172 +118,5 @@ function scrapeAutoTickets(auto_tickets, user){
 
 }
 
-/**
- * Gets the index of the row from the table coming in DOM element extracted
- * @param {array} filters 
- * @param {array} pages 
- */
-function getIndexOfRow(filters, pages){
 
-    return new Promise(async (resolve, reject)=>{
-
-        try {
-            
-            const $ = cheerio.load(pages[0]);
-            let filteredIndex = [];
-
-            filters.map((filter)=>{
-
-                $('#task > #task_table > thead > #hdr_task th').each(function(index){
-
-                    /**
-                     * Filters the header
-                     */
-                    const filterScrape = (stringFilter)=>{
-
-                        return $(this).find('span .column_head').text().indexOf(stringFilter);
-
-                    }
-
-                    if (filterScrape(filter) != -1) {
-
-                        filteredIndex.push(index);
-                        
-                    }
-
-                });  
-
-                
-            });
-
-            resolve(filteredIndex);
-
-        } catch (error) {
-            
-            logger.error(error, 'Unable to get the index of the columns for the ticket');
-            reject(error);
-
-        }
-
-    })
-
-
-}
-
-/**
- * Scrapes the ticket data from the DOM Object provided to it
- * @param {Array} pages 
- * @param {Object} user 
- */
-function scrapeTicketData(pages, user){
-
-    return new Promise(async(resolve, reject)=>{
-
-        try {
-
-            const columnnsToExtract = [  
-                'Number',
-                'Task type',
-                'Configuration item',
-                'Status',
-                'Priority',
-                'Assigned To',
-                'Assignment Group',
-                'Short Description',
-                'Created by'
-            ];
-
-            const columnKey = [
-                'tckt_nmbr',
-                'task_type',
-                'conf_item',
-                'status',
-                'ticket_priority_id',
-                'ass_to',
-                'ass_group',
-                'shrt_desc',
-                'auto_tckt'
-            ]
-
-            const tickets = [];
-
-            const filteredIndex = await getIndexOfRow([...columnnsToExtract], pages);
-
-            const priorities = await fetchTicketPriorities();
-
-            const applications = await fetchTicketApplication();
-
-            const date = new Date(Date.now()).toLocaleDateString();
-            
-            await pages.map((page)=>{
-
-                const $ = cheerio.load(page);
-                
-                $('#task_table > .list2_body > tr').each(async function(){
-
-                    const extractedTicket = filteredIndex.reduce((totalColumns, column, index)=>{
-                        
-                        const extract = $(this).find('td').eq(column).text();
-                        
-                        switch (columnKey[index]) {
-
-                            case 'ticket_priority_id'://find the id of the matched priority level for the ticket
-
-                                const selectedPriority = priorities.find((priority)=>{
-                                    return priority.priority_name == extract;
-                                });
-
-                                return {...totalColumns,[columnKey[index]]: selectedPriority._id};
-                                 
-                            case 'auto_tckt':
-
-                                const isAutoTicket = extract != user.shortname ? true : false;
-
-                                return {...totalColumns,[columnKey[index]]: isAutoTicket};
-
-                            case 'conf_item'://includes to find the id of the matched application for the ticket
-                                
-                                const application_object = applications.find(application=>{
-
-                                    return application.conf_item == extract;
-
-                                });
-
-                                const application_id = typeof(application_object) != 'undefined' ? application_object._id : 
-                                applications.find(application=>application.conf_item == 'Others')._id;
-
-                                return {...totalColumns, [columnKey[index]]: extract, 'app_id': application_id};
-                                
-                            default:
-                                
-                                return {...totalColumns,[columnKey[index]]: extract};
-
-                        }
-
-                    },{});
-                
-                    tickets.push({user_id: user._id, created_at: date,...extractedTicket});
-
-
-                });
-            });
-
-            logger.info('Tickets scraped recently from SNow of the user', tickets);
-
-            resolve(tickets);
-
-        } catch (error) {
-            
-            logger.error(error, 'DOM object data scraper had an error' );
-
-            reject();
-
-        }
-
-    });
-
-}
-
-
-module.exports = scrapeOwnedTicketData;
-module.exports.scrapeAutoTickets = scrapeAutoTickets;
+module.exports = scrapeOwnedTicketData

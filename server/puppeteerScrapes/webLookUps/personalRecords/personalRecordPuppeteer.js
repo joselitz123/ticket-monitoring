@@ -22,20 +22,36 @@ module.exports = function(cookie, user){
                 logger.error(err,'Error while navigating to the active tickets of the user in personalRecordPuppeteer.js');
             });
             
-            //gets the total number of tickets in the page
+            //gets the total number of tickets for the user
             const length = await page.$eval('.text-align-right > span:nth-child(1) > .vcr_controls > .list_row_number_input > span:nth-child(2)', el=> el.innerHTML); 
 
             const extractCount = await Math.ceil(length/20);
 
             if (extractCount > 1) {
 
-                for (let index = 0; index < extractCount; index++) {
-
-                    contents.push(await page.content());
+                const arrayExecution = [];
+                
+                for (let index = 0; index > extractCount-1; index++) {
                     
+                    if (index == extractCount) {
+
+                        console.log('extraction');
+                        await page.waitFor(1000);
+                        contents.push(await page.content());
+                        await page.close();
+
+                    }else{
+
+                        console.log('extraction');
+                        contents.push(await page.content());
+                        await page.click("button[name='vcr_next']");
+                        await page.waitForResponse('https://pgglobalenterprise.service-now.com/task_list.do');
+                    }
+
+
                 }
 
-                await page.close();
+                // $("button[name='vcr_next']").html()
                 
             }else{
 
@@ -49,7 +65,7 @@ module.exports = function(cookie, user){
             
         } catch (error) {
 
-            error.logger('An issue occurred on the data scraper function', error);
+            logger.error(error, 'An issue occurred on the data scraper function');
 
             reject(error);
         }

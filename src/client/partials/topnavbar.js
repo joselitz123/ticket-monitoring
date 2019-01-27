@@ -17,7 +17,7 @@ export default ()=>(
         <div className="collapse navbar-collapse justify-content-end">
             <form className="navbar-form">
             <div className="input-group no-border">
-                <input type="text" value="" className="form-control" placeholder="Search..." />
+                <input type="text"  className="form-control" placeholder="Search..." />
                 <button type="submit" className="btn btn-default btn-round btn-just-icon">
                 <i className="material-icons">search</i>
                 <div className="ripple-container"></div>
