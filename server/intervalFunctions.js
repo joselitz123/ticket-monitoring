@@ -1,6 +1,6 @@
 const user_setting_model = require('./database/collections/user_settings/user_settings_model');
 const logger = require('./logger/loggerSettings')();
-const scrapePersonalRecord = require('./puppeteerScrapes/dataScrapers/personalRecords/scrapeTicketData');
+const personalTicketScrapeController = require('./puppeteerScrapes/scrapeControllers/personalTicketScrapeController');
 const socketDataProviders = require('./socketDataProviders/socketFunctions');
 
 /**
@@ -50,7 +50,7 @@ async function intervalFunctions(accessToken, userData){
 
         const interval = userInterval == null ? 30000 : userInterval;
     
-        await scrapePersonalRecord(accessToken, userData);//Scrapes first the data
+        await personalTicketScrapeController(userData);//Scrapes first the data
     
         await socketDataProviders();//Then run the queries for the sockets to send out data to frontend
     
@@ -58,7 +58,7 @@ async function intervalFunctions(accessToken, userData){
     
             try {
     
-                await scrapePersonalRecord(accessToken, userData);
+                await personalTicketScrapeController(userData);
     
                 await socketDataProviders(userData);
                 

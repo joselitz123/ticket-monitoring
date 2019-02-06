@@ -6,7 +6,8 @@ const userAcc = require('../../account').userAccount;
 
 
 /**
- * Inserts the scraped data to database and removes preexisting ones that has same date of extraction
+ * Inserts the scraped data to database and removes preexisting ones that has same date of extraction and returns 
+ * of what it inserted
  * @param {Array} data 
  */
 function insertScrapedTickets(data){
@@ -14,8 +15,6 @@ function insertScrapedTickets(data){
     return new Promise(async (resolve, reject)=>{
 
         try {
-
-            const date = new Date(Date.now()).toLocaleDateString();
 
             const database = await ticket_db();
 
@@ -31,13 +30,18 @@ function insertScrapedTickets(data){
 
             await database.insertMany(data)
             .then(data=>{
-                logger.info('saved successfully the new details of the ticket', data)
+
+                logger.info('saved successfully the new details of the ticket', data);
+
+                resolve(data);
+
             })
             .catch(err=>{
-                logger.error(err, 'Issue on saving the new details of the tickets');
-            });
 
-            resolve();
+                logger.error(err, 'Issue on saving the new details of the tickets');
+                reject();
+
+            });
 
         }catch(err){
 

@@ -15,8 +15,6 @@ module.exports = function(cookie, user){
 
             const page = await browser.newPage();
 
-            await page.setCookie(cookie);
-
             await page.goto(`https://pgglobalenterprise.service-now.com/task_list.do?sysparm_nostack=true&sysparm_query=active%3Dtrue%5Eassigned_to%3Djavascript:getMyAssignments()%5EORsys_created_by%3D${ user.shortname }%5Esys_class_name%3Dincident%5EORsys_class_name%3Dsc_req_item&sysparm_first_row=1&sysparm_view=&sysparm_clear_stack=true`, {timeout: 0})
             .catch(err=>{
                 logger.error(err,'Error while navigating to the active tickets of the user in personalRecordPuppeteer.js');

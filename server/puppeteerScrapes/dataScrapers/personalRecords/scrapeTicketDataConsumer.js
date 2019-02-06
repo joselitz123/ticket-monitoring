@@ -1,8 +1,8 @@
 const cheerio = require('cheerio');
-const logger = require('../../../../logger/loggerSettings')();
-const fetchTicketPriorities = require('../../../../dbQueries/forScrapeQueries/fetchTicketPriorities');
-const fetchTicketApplication = require('../../../../dbQueries/forScrapeQueries/fetchTicketApplications');
-const getTicketStatuses = require('../../../../dbQueries/forScrapeQueries/fetchTicketStatuses');
+const logger = require('../../../logger/loggerSettings')();
+const fetchTicketPriorities = require('../../../dbQueries/forScrapeQueries/fetchTicketPriorities');
+const fetchTicketApplication = require('../../../dbQueries/forScrapeQueries/fetchTicketApplications');
+const getTicketStatuses = require('../../../dbQueries/forScrapeQueries/fetchTicketStatuses');
 const getIndexOfRow = require('./getIndexOfRow');
 
 /**
@@ -25,7 +25,9 @@ function scrapeTicketDataConsumer(pages, user){
                 'Assigned To',
                 'Assignment Group',
                 'Short Description',
-                'Created by'
+                'Created by',
+                'Updated',
+                'Updated by'
             ];
 
             const columnKey = [
@@ -37,7 +39,9 @@ function scrapeTicketDataConsumer(pages, user){
                 'ass_to',
                 'ass_group',
                 'shrt_desc',
-                'auto_tckt'
+                'auto_tckt',
+                'updated',
+                'updated_by'
             ]
 
             const tickets = [];
@@ -101,9 +105,15 @@ function scrapeTicketDataConsumer(pages, user){
 
                                         );
 
-                                    logger.debug('status_id data', {extract_name: extract, ticket_status: ticket_status_id});
 
                                     return {...totalColumns, [columnKey[index]]: ticket_status_id._id};
+                                
+                                case 'updated': 
+                                    
+                                    const custom_extract = $(this).find('td').eq(column).children('div:first-child').text();
+                                    
+
+                                    return {...totalColumns,[columnKey[index]]: custom_extract  }
                                     
                                 default:
                                     
@@ -119,7 +129,7 @@ function scrapeTicketDataConsumer(pages, user){
 
                     },{});
                 
-                    tickets.push({user_id: user._id, created_at: date,...extractedTicket});
+                    tickets.push({user_id: user._id, updated_at: date,...extractedTicket});
 
 
                 });

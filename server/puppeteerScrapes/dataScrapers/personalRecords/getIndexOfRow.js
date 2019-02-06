@@ -1,4 +1,4 @@
-const logger = require('../../../../logger/loggerSettings')();
+const logger = require('../../../logger/loggerSettings')();
 const cheerio = require('cheerio');
 
 /**

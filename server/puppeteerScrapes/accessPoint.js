@@ -4,6 +4,9 @@ const userAccount = require('../account');
 const setCookieToBrowser = require('./setCookieToBrowser');
 const intervalFunctions = require('../intervalFunctions');
 
+/**
+ * Access point
+ */
 function accessPoint(){
 
 	return new Promise( async(resolve, reject) => {
@@ -19,8 +22,6 @@ function accessPoint(){
 			await userAccount(response.user);
 
 			logger.info(`Send out the user's data`, response.user);
-
-			await setCookieToBrowser(access_token); //set the cookie to a new browser instance to be used for scraping data
 
 			resolve();
 			

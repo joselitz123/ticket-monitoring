@@ -14,7 +14,9 @@ const ticketSchema = new Schema({
     ass_to: 'String',
     ass_group: 'String',
     auto_tckt: 'Boolean',
-    created_at: {type: 'date'}
+    updated: 'String',
+    updated_by: 'String',
+    updated_at: {type: 'date'}
 });
 
 
