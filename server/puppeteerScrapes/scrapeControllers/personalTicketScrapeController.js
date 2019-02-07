@@ -1,8 +1,8 @@
-const logger = require('../../../logger/loggerSettings')();
+const logger = require('../../logger/loggerSettings')();
 const _ = require('lodash')
 const personalRecordPuppeteer = require('../webLookUps/personalRecords/personalRecordPuppeteer');
 const getAutoTickets = require('../../dbQueries/forScrapeQueries/fetchAutoTickets');
-const insertScrapedTickets = require('../../../dbQueries/forScrapeQueries/insertScrapedTickets');
+const insertScrapedTickets = require('../../dbQueries/forScrapeQueries/insertScrapedTickets');
 const scrapeTicketDataConsumer = require('../dataScrapers/personalRecords/scrapeTicketDataConsumer');
 const scrapeAutoTickets = require('../dataScrapers/personalRecords/scrapeAutoTickets');
 
