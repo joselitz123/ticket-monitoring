@@ -1,20 +1,21 @@
-const ticketModel = require('../../database/collections/tickets/ticket_model');
 const logger = require('../../logger/loggerSettings')();
+const ticketModel = require('../../database/collections/tickets/ticket_model');
 const { userAccount } = require('../../account');
+const moment = require('moment-business-days');
 
 /**
- * Fetches the ticket that is ordered by priority from high to low
+ * Fetches the latest update log of the tickets from a user
  */
-function fetchTicketsPrioritySorted() {
+function fetchLatestTicketUpdateLog() {
 
     return new Promise( async(resolve, reject) => {
-
+        
         try {
 
-            const ticketCon = await ticketModel();
+            ticketCon = await ticketModel();
 
             const user = userAccount();
-        
+
             ticketCon.aggregate([
                 {$match: {user_id: user.id || '5bd6221d4dade63138a5c0c5'}},
                 {$lookup: {
@@ -36,6 +37,18 @@ function fetchTicketsPrioritySorted() {
                 }},
                 {$unwind: '$priority'},
                 {$lookup: {
+                    from: 'tckt_update_logs',
+                    let: {ticket_number: '$tckt_nmbr'},
+                    pipeline: [
+                        {$match: {$expr: {$eq: ['$ticket_id', '$$ticket_number']}}},
+                        {$sort: {date_updated: -1}},
+                        {$limit: 1},
+                        {$project: {ticket_id: 0}}
+                    ],
+                    as: 'ticket_update'
+                }},
+                {$unwind: '$ticket_update'},
+                {$lookup: {
                     from: 'tckt_statuses',
                     let: {status_id: '$status_id'},
                     pipeline: [
@@ -44,44 +57,48 @@ function fetchTicketsPrioritySorted() {
                     as: 'ticket_status'
                 }},
                 {$unwind: '$ticket_status'},
-                {$addFields: {
+                {$project: {
+                    tckt_nmbr: 1,
+                    task_type: 1,
+                    ass_to: 1,
+                    ass_group: 1,
+                    shrt_desc: 1,
+                    auto_tckt: 1,
+                    updated_by: 1,
+                    ticket_update: 1,
                     application: '$application.app_name',
                     priority: '$priority.priority_name',
                     update_interval: '$priority.update_interval',
                     divide_time: '$ticket_status.divide_time'
                 }},
-                {$project: {
-                    tckt_nmbr: 1,
-                    priority: 1,
-                    update_interval: 1,
-                    application: 1,
-                    updated: 1,
-                    updated_by: 1,
-                    divide_time: 1
-                }},
-                {$sort: {priority: 1}} 
             ])
             .then(data => {
-                
+
                 resolve(data);
-                
+
             })
             .catch(err => {
-                
-                logger.error(err, 'An issue occured in fetchTicketsPrioritySorted function')
+
+                logger.error(err, 'An error occured in fetchLatestTicketUpdateLog');
+
+                console.log(err);
+
+                reject();
 
             });
             
         } catch (error) {
+
+            logger.error(error, 'An error occured in fetchLatestTicketUpdateLog');
+
+            console.log(error);
+
+            reject();
             
-            logger.error(error, 'An issue occured in fetchTicketsPrioritySorted function');
-
-            reject()
-
         }
 
-    }); 
+    });
 
 }
 
-module.exports = fetchTicketsPrioritySorted;
+module.exports = fetchLatestTicketUpdateLog;

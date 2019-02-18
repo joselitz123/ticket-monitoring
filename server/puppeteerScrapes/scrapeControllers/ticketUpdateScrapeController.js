@@ -2,7 +2,13 @@ const ticket_query  = require('../../dbQueries/notificationLogicQueries/fetchTic
 const logger = require('../../logger/loggerSettings')();
 const scrapeTicketData = require('../webLookUps/checkWholeTicketDetails/checkWholeTicketDetailsPuppeteer');
 const workNotedataScraper = require('../dataScrapers/ticketUpdateDataScraper/workNoteDataScraper');
+const removeOldUpdateLogs = require('../../dbQueries/notificationLogicQueries/removelOldUpdateLogs');
+const insertTicketUpdateLogs = require('../../dbQueries/notificationLogicQueries/insertTicketUpdateLogs');
 
+/**
+ * Processes the scraping of data from worknote update
+ * as reference if ticket should be updated
+ */
 function ticketUpdateScrapeController() {
 
     return new Promise( async(resolve, reject) => {
@@ -13,11 +19,15 @@ function ticketUpdateScrapeController() {
 
             const chunkedData = await chunkQueries(5, tickets);
 
-            const data = chunkedData.reduce( async(accumulator, currentValue) => {
+            const ticketToBeUpdated = [];
+
+            const data = await chunkedData.reduce( async(accumulator, currentValue) => {
 
                 const accum = await accumulator;
 
                 const arrFuncs = currentValue.reduce((acc, curVal) => {
+
+                    ticketToBeUpdated.push(curVal.tckt_nmbr);
 
                     return [...acc, scrapeTicketData(curVal.tckt_nmbr)];
 
@@ -33,11 +43,21 @@ function ticketUpdateScrapeController() {
 
                 const extractedData = await Promise.all(scrapeFuncs);
 
-                return [...accum, ...extractedData];
+                const spreadedData = extractedData.reduce((cur, val) => {
+
+                    return [...cur, ...val];
+                    
+                }, []);
+
+                return [...accum, ...spreadedData];
 
             }, Promise.resolve([]));
-            
-            resolve(data);
+
+            await removeOldUpdateLogs(ticketToBeUpdated);
+
+            await insertTicketUpdateLogs(data);
+
+            resolve();
             
         } catch (error) {
 

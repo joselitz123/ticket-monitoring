@@ -4,7 +4,7 @@ const logger = require('../../../logger/loggerSettings')();
 /**
  * Scrapes data from Service Now
  */
-module.exports = function(cookie, user){
+module.exports = function(user){
 
     return new Promise(async (resolve, reject)=>{
         try {
@@ -33,14 +33,12 @@ module.exports = function(cookie, user){
                     
                     if (index == extractCount) {
 
-                        console.log('extraction');
                         await page.waitFor(1000);
                         contents.push(await page.content());
                         await page.close();
 
                     }else{
 
-                        console.log('extraction');
                         contents.push(await page.content());
                         await page.click("button[name='vcr_next']");
                         await page.waitForResponse('https://pgglobalenterprise.service-now.com/task_list.do');

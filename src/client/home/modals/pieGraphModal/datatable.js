@@ -47,7 +47,6 @@ class DataTable extends Component  {
 
         if (tableInstance != '') {
 
-            console.log(tableInstance);
             tableInstance.rows.add(this.props.appTickets).draw();
 
         }

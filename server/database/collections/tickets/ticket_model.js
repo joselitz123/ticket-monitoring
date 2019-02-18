@@ -33,7 +33,9 @@ function userTicketModel(){
             const db = mongoose.connection;
 
             db.on('error', ()=>{
+
                 reject(console.error.bind(console, 'conection error:'));
+                
             });
 
             db.once('connected',()=>{

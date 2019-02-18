@@ -2,6 +2,7 @@ const user_setting_model = require('./database/collections/user_settings/user_se
 const logger = require('./logger/loggerSettings')();
 const personalTicketScrapeController = require('./puppeteerScrapes/scrapeControllers/personalTicketScrapeController');
 const socketDataProviders = require('./socketDataProviders/socketFunctions');
+const ticketUpdateScrapeController = require('./puppeteerScrapes/scrapeControllers/ticketUpdateScrapeController');
 
 /**
  * Gets the interval set by user in the database
@@ -37,48 +38,79 @@ function getIntervalSettings (user_data){
 
 }
 
+async function waitFor(ms) {
+
+    return new Promise(resolve => setTimeout(resolve, ms));
+
+}
+
 /**
  * Runs the functions dedicated for data scraping by time interval
  * @param {Object} accessToken 
  * @param {Object} userData 
  */
-async function intervalFunctions(accessToken, userData){
+function intervalFunctions(userData){
 
-    try {
+    return new Promise( async(resolve, reject) => {
+
+        try {
         
-        const userInterval = await getIntervalSettings(userData);
+            const userInterval = await getIntervalSettings(userData);
+    
+            const interval = userInterval == null ? 30000 : userInterval;
 
-        const interval = userInterval == null ? 30000 : userInterval;
-    
-        await personalTicketScrapeController(userData);//Scrapes first the data
-    
-        await socketDataProviders();//Then run the queries for the sockets to send out data to frontend
-    
-        setInterval(async ()=>{
-    
-            try {
-    
-                await personalTicketScrapeController(userData);
-    
-                await socketDataProviders(userData);
-                
-    
-            } catch (error) {
-    
-                logger.error(error, "An issue occured while running interval functions ");
+            
+
+            while (true) {
+
+                await personalTicketScrapeController(userData);//Scrapes first the data
+        
+                await Promise.all([socketDataProviders(userData),ticketUpdateScrapeController()])//Then run the queries for the sockets to send out data to frontend
+
+                await waitFor(interval);
+
+                resolve();
                 
             }
+        
+            // await personalTicketScrapeController(userData);//Scrapes first the data
+        
+            // await Promise.all([socketDataProviders(userData),ticketUpdateScrapeController()])//Then run the queries for the sockets to send out data to frontend
+            
             
     
-        }, interval);
+        
+            // await setInterval(async ()=>{
+        
+            //     try {
+        
+            //         await personalTicketScrapeController(userData);
+    
+            //         await Promise.all([socketDataProviders(userData), ticketUpdateScrapeController()]);
+                    
+        
+            //     } catch (error) {
+        
+            //         logger.error(error, "An issue occured while running interval functions ");
 
-    } catch (error) {
+            //         reject();
+                    
+            //     }
+                
+        
+            // }, interval);
 
-        logger.error(error, "An issue occured while running interval functions ");
+            // resolve();
+    
+        } catch (error) {
+    
+            logger.error(error, "An issue occured while running interval functions ");
 
-    }
+            reject();
+    
+        }
 
-   
+    });
 
 }
 

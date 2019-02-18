@@ -30,7 +30,7 @@ router.get('/auth/login', async function(req, res, next){
 
 	// await setCookieToBrowser(access_token); //set the cookie to a new browser instance to be used for scraping data
 
-	await intervalFunctions(access_token, user);
+	await intervalFunctions(user);
 
 });
 

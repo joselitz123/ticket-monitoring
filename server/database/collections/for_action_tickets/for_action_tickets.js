@@ -2,19 +2,21 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const dbInstance = require('../../dbInstance');
 
-const tckt_update_logSchema = new Schema({
+const forActionTicketSchema = new Schema({
     ticket_id: 'String',
-    date_updated: {type: 'Date'},
-    resource_id: {type: Schema.Types.ObjectId},
-    update_content: 'String',
-    comment_content: 'String'
+    date_to_update: {type: 'Date'},
+    date_last_updated: {type: 'Date'},
+    time_acknowledged: {type: 'Date'},
+    time_prompted: {type: 'Date'},
+    is_acknowledged: 'Boolean',
+    is_user_input: 'Boolean'
 });
 
 
 /**
- * Object Model of ticket update logs in database
+ * Object Model of for action tickets table
  */
-function tckt_update_log(){
+function forActionTickets(){
 
     return new Promise(async (resolve, reject)=>{
         try {
@@ -28,7 +30,7 @@ function tckt_update_log(){
             });
 
             db.once('connected',()=>{
-                resolve(mongoose.model('Tckt_update_logs',tckt_update_logSchema));
+                resolve(mongoose.model('For_action_ticket',forActionTicketSchema));
             });
             
         } catch (error) {
@@ -42,4 +44,4 @@ function tckt_update_log(){
 
 }
 
-module.exports = tckt_update_log;
+module.exports = forActionTickets;
