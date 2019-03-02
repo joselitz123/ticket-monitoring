@@ -8,7 +8,9 @@ let biops_resources = []; // Declared outside from function for caching
 
 /**
  * Extracts and returns the relevant data from the DOM object
+ * returned data contains all the updates from BIOPS
  * @param {*} DOMObject - DOM content
+ * 
  */
 function workNoteDataScraper(DOMObject) {
 

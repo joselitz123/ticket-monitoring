@@ -44,9 +44,9 @@ module.exports = function() {
 
                     const user_name = await page.$eval('.navpage-header-content > .dropdown > #user_info_dropdown > div > .user-name', e=>e.innerHTML);
 
-                    let cookies = await page.cookies('https://fedauth.pg.com');
+                    // let cookies = await page.cookies('https://fedauth.pg.com');
                 
-                    let pgcookies = await page.cookies('https://pgglobalenterprise.service-now.com');
+                    // let pgcookies = await page.cookies('https://pgglobalenterprise.service-now.com');
                     
                     const Users = await user_model();
 
@@ -54,7 +54,7 @@ module.exports = function() {
 
                     
 
-                    const browserCookies = await [...cookies, ...pgcookies];
+                    // const browserCookies = await [...cookies, ...pgcookies];
                     
                     
 
@@ -111,7 +111,7 @@ module.exports = function() {
                                     logger.info(data, `Successfully saved the credentials if the new user`);
 
                                     resolve({
-                                        browserCookies: browserCookies,
+                                        // browserCookies: browserCookies,
                                         user: data
                                     });
                                 })
@@ -138,7 +138,7 @@ module.exports = function() {
                         await page.close();
 
                         resolve({
-                                browserCookies: browserCookies, 
+                                // browserCookies: browserCookies, 
                                 user: user
                             });
 

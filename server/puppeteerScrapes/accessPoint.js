@@ -15,7 +15,7 @@ function accessPoint(){
 
 			const response = await loginUser();
 
-			access_token = await response.browserCookies[0];
+			// access_token = await response.browserCookies[0];
 
 			user = await response.user;
 

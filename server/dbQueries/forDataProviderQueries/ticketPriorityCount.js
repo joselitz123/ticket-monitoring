@@ -29,6 +29,8 @@ async function providePriorityTicketCount(){
     } catch (error) {
         
         logger.error(error, 'An issue occured while querieng for the toal ticket for every ticket priority');
+
+        reject(error);
         
     }
 }

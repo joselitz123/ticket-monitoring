@@ -1,4 +1,4 @@
-import React, { Component, createRef, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
@@ -8,20 +8,20 @@ import LoadingData from '../../../partials/loaderComponents/loadingData';
 
 
 
-const PieGraphModal = ({toggleModal, HideModal, modalName, isFetching}) => {
+const PieGraphModal = ({toggleModal, HideModal, modalName, isFetching, data}) => {
 
     return (
-    <Modal isOpen={toggleModal} toggle={HideModal} size="lg" centered={true} >
-        <ModalHeader toggle={HideModal} >
-            Active Tickets for {modalName}
-        </ModalHeader>
-        <ModalBody>
-            {isFetching ? <LoadingData></LoadingData> : <DataTable />}
-        </ModalBody>
-        <ModalFooter>
-            <Button color="secondary" onClick={HideModal} >Close</Button>
-        </ModalFooter>
-    </Modal>  
+        <Modal isOpen={toggleModal} toggle={HideModal} size="lg" centered={true} >
+            <ModalHeader toggle={HideModal} >
+                Active Tickets for {modalName}
+            </ModalHeader>
+            <ModalBody>
+                {isFetching ? <LoadingData></LoadingData> : <DataTable />}
+            </ModalBody>
+            <ModalFooter>
+                <Button color="secondary" onClick={HideModal} >Close</Button>
+            </ModalFooter>
+        </Modal>  
     )
 
 }
@@ -31,7 +31,7 @@ PieGraphModal.propTypes = {
     toggleModal: PropTypes.bool.isRequired,
     HideModal: PropTypes.func.isRequired,
     modalName: PropTypes.string.isRequired,
-    isFetching: PropTypes.bool.isRequired
+    isFetching: PropTypes.bool.isRequired    
 }
 
 const mapStateToProps = state => ({

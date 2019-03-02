@@ -121,8 +121,6 @@ class DoughnutGraph extends Component{
 
         render(){
 
-            
-
             return (
                 <div className="col-lg-6 col-md-12">
                     <div className="card">
@@ -131,22 +129,33 @@ class DoughnutGraph extends Component{
                         </div>
                         <div className="card-body">
                             {/* <button className="btn btn-primary" onClick={this.showDatabyModal}>TEST Modal</button> */}
-                            <ResponsiveContainer width="100%" height={400} >
-                                <PieChart >
-                                    <Pie data={this.props.appData} activeShape={this.renderActiveShape} onClick={this.showDatabyModal} activeIndex={this.props.activeIndex} dataKey="total_tickets" nameKey="app_name" cx="50%" cy="50%" innerRadius={50}  outerRadius={120} onMouseEnter={this.props.setActiveIndex} >
-                                        {this.props.appData.map((data, index)=>{
+                            {this.props.appData == 0 ? 
 
-                                            return <Cell key={`cell-${index}`} fill={this.props.fillColor[index]} stroke="#202940" />
+                                <div className="empty_container">
+                                    <div>
+                                        No data can be displayed yet.
+                                    </div>
+                                </div> 
 
-                                        })}
-                                    </Pie>
-                                    <Legend verticalAlign="bottom" height={36} />
-                                </PieChart>
-                            </ResponsiveContainer>
+                            : 
+                                <ResponsiveContainer width="100%" height={400} >
+                                    <PieChart >
+                                        <Pie data={this.props.appData} activeShape={this.renderActiveShape} onClick={this.showDatabyModal} activeIndex={this.props.activeIndex} dataKey="total_tickets" nameKey="app_name" cx="50%" cy="50%" innerRadius={50}  outerRadius={120} onMouseEnter={this.props.setActiveIndex} >
+                                            {this.props.appData.map((data, index)=>{
+
+                                                return <Cell key={`cell-${index}`} fill={this.props.fillColor[index]} stroke="#202940" />
+
+                                            })}
+                                        </Pie>
+                                        <Legend verticalAlign="bottom" height={36} />
+                                    </PieChart>
+                                </ResponsiveContainer>
+                            }
                         </div>
                     </div>
                 </div>
             );
+
         }
     
 
@@ -158,7 +167,7 @@ class DoughnutGraph extends Component{
 const mapStateToProps = state =>({
     appData: state.setAppTicketCount.data,
     activeIndex: state.setAppTicketCount.activeIndex,
-    fillColor: state.setAppTicketCount.cellColors
+    fillColor: state.setAppTicketCount.cellColors,
 });
 
 DoughnutGraph.propTypes = {

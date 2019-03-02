@@ -39,7 +39,6 @@ function getAutoTickets(userData){
                         if (err) {
                             logger.error(err, 'Issue occured while getting auto tickets from database');
                         }
-                        logger.trace
                         resolve(doc);
                     });
             }else{

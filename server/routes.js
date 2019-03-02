@@ -18,7 +18,7 @@ router.get('/auth/login', async function(req, res, next){
 	
 	const response = await loginUser();
 
-	access_token = await response.browserCookies[0];
+	// access_token = await response.browserCookies[0];
 
 	user = await response.user;
 

@@ -118,3 +118,34 @@ table.dataTable.display tbody td {
 	.loader_container > .loader_text {
 		align-self: center;
 	}
+
+.empty_container {
+	height: -webkit-fill-available;
+	max-height: 400px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#ticketNotifAcc .card .card-header {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-right: 12px;
+    padding-left: 0px;
+}
+
+#ticketNotifAcc .card {
+	margin-top: 5px;
+    margin-bottom: 5px;
+    background-color: #1A2035;
+    border-left: 6px solid #25b1c3;
+    border-radius: 0px;
+}
+
+#ticketNotifAcc .btn{
+	color: rgba(255, 255, 255, 0.8)
+}
+
+#ticketNotifAcc .card-body{
+	color: rgba(255, 255, 255, 0.8)
+}

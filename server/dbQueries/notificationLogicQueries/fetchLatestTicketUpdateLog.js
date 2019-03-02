@@ -1,7 +1,6 @@
 const logger = require('../../logger/loggerSettings')();
 const ticketModel = require('../../database/collections/tickets/ticket_model');
 const { userAccount } = require('../../account');
-const moment = require('moment-business-days');
 
 /**
  * Fetches the latest update log of the tickets from a user
@@ -69,7 +68,8 @@ function fetchLatestTicketUpdateLog() {
                     application: '$application.app_name',
                     priority: '$priority.priority_name',
                     update_interval: '$priority.update_interval',
-                    divide_time: '$ticket_status.divide_time'
+                    divide_time: '$ticket_status.divide_time',
+                    ticket_status: '$ticket_status.status_name'
                 }},
             ])
             .then(data => {
@@ -81,9 +81,7 @@ function fetchLatestTicketUpdateLog() {
 
                 logger.error(err, 'An error occured in fetchLatestTicketUpdateLog');
 
-                console.log(err);
-
-                reject();
+                reject(err);
 
             });
             
@@ -91,9 +89,7 @@ function fetchLatestTicketUpdateLog() {
 
             logger.error(error, 'An error occured in fetchLatestTicketUpdateLog');
 
-            console.log(error);
-
-            reject();
+            reject(error);
             
         }
 
