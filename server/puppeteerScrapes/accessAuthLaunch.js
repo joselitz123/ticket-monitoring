@@ -28,12 +28,15 @@ module.exports = function() {
 
             // await page.setRequestInterception(false); // disable request interception due to bug that affected the processing
             await page.on('framenavigated', async ()=>{
-                
-                if (page.url().indexOf('https://pgglobalenterprise.service-now.com/external_logout_complete.do') != -1) {
+
+                try {
+
+                    if (page.url().indexOf('https://pgglobalenterprise.service-now.com/external_logout_complete.do') != -1) {
 
                     await page.goto('https://pgglobalenterprise.service-now.com/nav_to.do?uri=%2Fhome.do', {timeout: 0})
                         .catch((err)=>{
                         
+                            logger.error(err, 'An issue occured in accessAuth');
 
                         });
                     
@@ -58,7 +61,7 @@ module.exports = function() {
                     
                     
 
-                    if (await user == null) {
+                    if (user == null) {
 
                         setTimeout(async ()=>{
                         
@@ -134,7 +137,7 @@ module.exports = function() {
                         
 
                     }else{
-                        
+
                         await page.close();
 
                         resolve({
@@ -149,6 +152,14 @@ module.exports = function() {
                     
 
                 }
+                    
+                } catch (error) {
+
+                    logger.error(error, 'An issue occured while trying to login');
+
+                    reject(error);
+                    
+                }
 
             });
             
@@ -157,6 +168,8 @@ module.exports = function() {
         } catch (error) {
 
             logger.error(error, 'An issue occured while trying to login');
+
+            reject(error);
 
         }
     });

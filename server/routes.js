@@ -14,23 +14,35 @@ let user;
 
 router.get('/auth/login', async function(req, res, next){
 
-	logger.info('Request to login and begin update in frontend', req.headers);
+	try {
+
+		logger.info('Request to login and begin update in frontend', req.headers);
 	
-	const response = await loginUser();
+		const response = await loginUser();
 
-	// access_token = await response.browserCookies[0];
+		// access_token = await response.browserCookies[0];
 
-	user = await response.user;
+		user = await response.user;
 
-	await userAccount(response.user);
+		await userAccount(response.user);
 
-	logger.info(`Send out the user's data`, response.user);
+		logger.info(`Send out the user's data`, response.user);
 
-	res.send(JSON.stringify(response.user));
+		res.send(JSON.stringify(response.user));
 
-	// await setCookieToBrowser(access_token); //set the cookie to a new browser instance to be used for scraping data
+		// await setCookieToBrowser(access_token); //set the cookie to a new browser instance to be used for scraping data
 
-	await intervalFunctions(user);
+		await intervalFunctions(user);
+		
+	} catch (error) {
+
+		console.log(error);
+
+		logger.error(error, 'An issue occured in authentication route');
+		
+	}
+
+	
 
 });
 

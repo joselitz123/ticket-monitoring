@@ -138,9 +138,25 @@ table.dataTable.display tbody td {
 	margin-top: 5px;
     margin-bottom: 5px;
     background-color: #1A2035;
-    border-left: 6px solid #25b1c3;
     border-radius: 0px;
 }
+
+#ticketNotifAcc .priority_4 {
+	border-left: 6px solid #4ea752;
+}
+
+#ticketNotifAcc .priority_3 {
+	border-left: 6px solid #25b1c3;
+}
+
+#ticketNotifAcc .priority_2 {
+	border-left: 6px solid #ff9800;
+}
+
+#ticketNotifAcc .priority_1 {
+	border-left: 6px solid #da3a36;
+}
+
 
 #ticketNotifAcc .btn{
 	color: rgba(255, 255, 255, 0.8)
@@ -149,3 +165,25 @@ table.dataTable.display tbody td {
 #ticketNotifAcc .card-body{
 	color: rgba(255, 255, 255, 0.8)
 }
+
+.opt_extension {
+	width: 170px;
+	box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+	background-color: #2f4856;
+	z-index: 5;
+	position: fixed;
+}
+
+	.opt_extension ul {
+		list-style: none;
+		padding: 6px 0px;
+		margin: 0px 0px;
+	}
+
+		.opt_extension li {
+			padding: 0px 16px;
+		}
+
+		.opt_extension li:hover {
+			background-color: #29324a;
+		}

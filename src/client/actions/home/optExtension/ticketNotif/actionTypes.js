@@ -1,0 +1,2 @@
+export const SHOW_OPTIONS = 'SHOW_OPTIONS';
+export const HIDE_OPTIONS = 'HIDE_OPTIONS';

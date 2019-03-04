@@ -13,7 +13,7 @@ const HomeLayout = ()=>{
 		return (
 			<div className="content">
 
-				<div className="container-fluid">
+				<div className="container-fluid" >
 					<TicketPriorityBoard />
 
 				<div className="row">

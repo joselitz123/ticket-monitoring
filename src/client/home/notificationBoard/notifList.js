@@ -2,15 +2,32 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ActionList from './actionList';
+import { showOptions } from '../../actions/home/optExtension/ticketNotif/actions';
 
-const NotifList = ({data}) =>(
+const NotifList = ({data, showOptions}) =>{
 
-    data.map(data => 
+    if (data.length == 0) {
+        
+        return (
+            <div className="empty_container"><div>No data can be displayed yet.</div></div>
+        );
+
+    }
+
+    const optExtension = (e, ticket_no) => {
+        showOptions({
+            y_coord: e.clientY,
+            x_coord: e.clientX,
+            ticket_no: ticket_no
+        });
+    }
+
+    return data.map(data => 
         (
-           <div key={data._id} className="card">
+           <div key={data._id} className={`card priority_${data.ticket_details.priority.charAt(0)}`}>
                <div className="card-header" id="headingOne">
                <h2 className="mb-0">
-                   <button className="btn btn-link" type="button" data-toggle="collapse" data-target={`#${data._id}`} aria-expanded="false" aria-controls={data._id}>
+                   <button className="btn btn-link" type="button" onContextMenu={e=>optExtension(e, data._id)} data-toggle="collapse" data-target={`#${data._id}`} aria-expanded="false" aria-controls={data._id}>
                    {`${data._id}: ${data.ticket_details.shrt_desc}`}
                    </button>
                </h2>
@@ -31,12 +48,12 @@ const NotifList = ({data}) =>(
                </div>
            </div>
        )
-
    )
-);
+};
 
 NotifList.propTypes = {
-    data: PropTypes.array.isRequired
+    data: PropTypes.array.isRequired,
+    showOptions: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
@@ -45,4 +62,4 @@ const mapStateToProps = state => ({
 
 
 
-export default connect(mapStateToProps)(NotifList);
+export default connect(mapStateToProps, { showOptions })(NotifList);

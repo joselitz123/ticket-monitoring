@@ -53,7 +53,7 @@ function ticketUpdateScrapeController() {
 
             }, Promise.resolve([]));
 
-            await removeOldUpdateLogs(ticketToBeUpdated);
+            await removeOldUpdateLogs(ticketToBeUpdated); 
 
             await insertTicketUpdateLogs(data);
 

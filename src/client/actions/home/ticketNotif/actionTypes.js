@@ -1,0 +1,2 @@
+export const POPULATE_DATA = 'POPULATE_DATA';
+

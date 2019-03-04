@@ -1,4 +1,4 @@
-const logger = require('../../logger/loggerSettings');
+const logger = require('../../logger/loggerSettings')();
 const tickets_query = require('../../dbQueries/forDataProviderQueries/appTickets');
 
 
@@ -21,6 +21,8 @@ async function PerAppTicketComponent(req, res){
     } catch (error) {
 
         logger.error(error, "An issue occured while running PerAppTicketComponent function");
+
+        reject(error);
         
     }
 

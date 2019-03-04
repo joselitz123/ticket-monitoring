@@ -5,9 +5,9 @@ const logger = require('../logger/loggerSettings')();
 
 /**
  * 
- * @param {array} user_acc 
+ * Pushes data to the frontend for ticket total and app ticket count
  */
-function socketDataProviders(user_acc){
+function socketDataProviders(){
     
     return new Promise(async (resolve, reject)=>{
 

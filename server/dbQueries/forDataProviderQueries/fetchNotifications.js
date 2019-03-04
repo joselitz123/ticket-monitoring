@@ -3,7 +3,7 @@ const logger = require('../../logger/loggerSettings')();
 const { userAccount } = require('../../account');
 
 /**
- * Queries from the data the all the ticket notifications for user
+ * Queries from the database all the ticket notifications for user
  */
 async function fetchNotification(){
 

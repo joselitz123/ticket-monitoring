@@ -4,6 +4,7 @@ const personalTicketScrapeController = require('./puppeteerScrapes/scrapeControl
 const socketDataProviders = require('./socketDataProviders/socketFunctions');
 const ticketUpdateScrapeController = require('./puppeteerScrapes/scrapeControllers/ticketUpdateScrapeController');
 const notificationController = require('./notificationLogics/noficationController');
+const ticketNotifProvider = require('./socketDataProviders/ticketActions/ticketActions');
 
 /**
  * Gets the interval set by user in the database
@@ -67,11 +68,13 @@ function intervalFunctions(userData){
                 await personalTicketScrapeController(userData);//Scrapes first the data
         
                 await Promise.all([
-                    socketDataProviders(userData),
+                    socketDataProviders(),
                     ticketUpdateScrapeController(),
                 ])//Then run the queries for the sockets to send out data to frontend
 
                 await notificationController();
+
+                await ticketNotifProvider();
 
                 await waitFor(interval);
 
