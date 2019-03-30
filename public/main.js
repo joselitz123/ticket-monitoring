@@ -12,8 +12,9 @@ const notifications = require('../electronFunctions/partials/notification');
   
   function createWindow () {
     // Create the browser window.
-    win = new BrowserWindow({width: 1600, 
-                            height: 900 ,
+    win = new BrowserWindow({width: 2400,
+                            height: 1080,
+                            resizable: true,
                             minWidth: 800, 
                             minHeight: 600, 
                             icon: __dirname + '/img/Logo_raw.ico'});

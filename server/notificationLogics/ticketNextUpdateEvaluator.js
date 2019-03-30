@@ -43,11 +43,13 @@ function ticketNextUpdateEvaluator(notif_types) {
                         time_prompted: moment()
                     }
                     
-                    return nextUpdate.format('LL') == moment().format('LL') ? [...accumulator, data] : accumulator;
+                    return nextUpdate.format('LL') >= moment().format('LL') ? [...accumulator, data] : accumulator;
 
                 } else {
 
                     const nextUpdate = moment(date_updated).businessAdd(hourUpdate, "hours");
+
+                    const hrBeforeNxtUpd = moment(date_updated).businessAdd((hourUpdate-1), "hours")
 
                     const data = {
                         ticket_id: tckt_nmbr,
@@ -56,7 +58,7 @@ function ticketNextUpdateEvaluator(notif_types) {
                         time_prompted: moment()
                     }
 
-                    return [...accumulator, data];
+                    return  hrBeforeNxtUpd.format('LL') >= moment().format('LL') ? [...accumulator, data] : accumulator;
 
                 }
 

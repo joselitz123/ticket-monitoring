@@ -35,6 +35,7 @@ function fetchHighPriorityTickets() {
                 }},
                 {$unwind: '$ticket_status'},
                 {$project: {
+                    tckt_nmbr: '$tckt_nmbr',
                     user_id: 1,
                     ticket_priority: '$ticket_priority.priority_name',
                     ticket_status: '$ticket_status.status_name'
