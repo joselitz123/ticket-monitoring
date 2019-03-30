@@ -4,30 +4,33 @@ const fetchTicketPriorities = require('../../../dbQueries/forScrapeQueries/fetch
 const fetchTicketApplication = require('../../../dbQueries/forScrapeQueries/fetchTicketApplications');
 const getTicketStatuses = require('../../../dbQueries/forScrapeQueries/fetchTicketStatuses');
 const getIndexOfRow = require('./getIndexOfRow');
+const { userAccount } = require('../../../account');
 
 /**
  * Scrapes the ticket data from the DOM Object provided to it
  * @param {Array} pages 
  * @param {Object} user 
  */
-function scrapeTicketDataConsumer(pages, user){
+function scrapeTicketDataConsumer(pages){
 
     return new Promise(async(resolve, reject)=>{
 
         try {
 
+            const user = userAccount();
+
             const columnnsToExtract = [  
-                'Number',
-                'Task type',
-                'Configuration item',
-                'Status',
-                'Priority',
-                'Assigned To',
-                'Assignment Group',
-                'Short Description',
-                'Created by',
-                'Updated',
-                'Updated by'
+                'number',
+                'sys_class_name',
+                'cmdb_ci',
+                'state',
+                'priority',
+                'assigned_to',
+                'assignment_group',
+                'short_description',
+                'sys_created_by',
+                'sys_updated_on',
+                'sys_updated_by'
             ];
 
             const columnKey = [
@@ -46,7 +49,7 @@ function scrapeTicketDataConsumer(pages, user){
 
             const tickets = [];
 
-            const filteredIndex = await getIndexOfRow([...columnnsToExtract], pages);
+            const filteredIndex = await getIndexOfRow(columnnsToExtract, pages);
 
             const priorities = await fetchTicketPriorities();
 
@@ -129,7 +132,7 @@ function scrapeTicketDataConsumer(pages, user){
 
                     },{});
                 
-                    tickets.push({user_id: user._id, updated_at: date,...extractedTicket});
+                    tickets.push({user_id: user.id, updated_at: date,...extractedTicket});
 
 
                 });

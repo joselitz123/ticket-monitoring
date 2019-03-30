@@ -1,9 +1,9 @@
-const ticket_query  = require('../../dbQueries/notificationLogicQueries/fetchTicketsPrioritySorted');
 const logger = require('../../logger/loggerSettings')();
 const scrapeTicketData = require('../webLookUps/checkWholeTicketDetails/checkWholeTicketDetailsPuppeteer');
 const workNotedataScraper = require('../dataScrapers/ticketUpdateDataScraper/workNoteDataScraper');
 const removeOldUpdateLogs = require('../../dbQueries/notificationLogicQueries/removelOldUpdateLogs');
 const insertTicketUpdateLogs = require('../../dbQueries/notificationLogicQueries/insertTicketUpdateLogs');
+const { updated_data } = require('../../cachedData/updatedData/updatedData');
 
 /**
  * Processes the scraping of data from worknote update
@@ -13,11 +13,11 @@ function ticketUpdateScrapeController() {
 
     return new Promise( async(resolve, reject) => {
 
-        try {
+        try {            
 
-            const tickets = await ticket_query();
+            const updatedData = await updated_data();
 
-            const chunkedData = await chunkQueries(5, tickets);
+            const chunkedData = await chunkQueries(5, updatedData);
 
             const ticketToBeUpdated = [];
 

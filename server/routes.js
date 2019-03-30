@@ -36,8 +36,6 @@ router.get('/auth/login', async function(req, res, next){
 		
 	} catch (error) {
 
-		console.log(error);
-
 		logger.error(error, 'An issue occured in authentication route');
 		
 	}

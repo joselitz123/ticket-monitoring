@@ -9,8 +9,6 @@ const Sidebar = ({ user, alterCurrentUsername })=>{
 
     ipcRenderer.on('loadUserInfo', (event, data)=>{
 
-        console.log({data: data});
-
         alterCurrentUsername(data);
         
     });

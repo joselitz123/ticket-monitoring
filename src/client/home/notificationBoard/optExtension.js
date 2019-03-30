@@ -29,7 +29,6 @@ class OptExtension extends Component{
 
     scrollHandler(){
 
-        console.log('performed');
         this.props.hideOptions();
 
     }

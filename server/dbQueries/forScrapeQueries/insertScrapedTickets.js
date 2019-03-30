@@ -1,8 +1,9 @@
 const ticket_db = require('../../database/collections/tickets/ticket_model');
 const logger = require('../../logger/loggerSettings')();
 const userAcc = require('../../account').userAccount;
-
-
+const _ = require('lodash');
+const StoreUpdatedData = require('../../cachedData/updatedData/updatedData');
+const fetchFullTicketDetail = require('./fetchFullTicketDetail');
 
 
 /**
@@ -18,30 +19,30 @@ function insertScrapedTickets(data){
 
             const database = await ticket_db();
 
-            const user_acc = userAcc();
+            const user_acc = await userAcc();
 
-            await database.remove({user_id: user_acc.id})
-            .then(data=>{
-                logger.trace('removed successfully the old details of the ticket', data)
-            })
+            const oldData = await fetchFullTicketDetail();
+
+            await database.deleteMany({user_id: user_acc.id})
             .catch(err=>{
                 logger.error( err,'Issue removing old details of the ticket');
+                reject(err);
             });
 
             await database.insertMany(data)
-            .then(data=>{
-
-                logger.info('saved successfully the new details of the ticket', data);
-
-                resolve(data);
-
-            })
             .catch(err=>{
 
                 logger.error(err, 'Issue on saving the new details of the tickets');
                 reject();
 
             });
+
+            const newData = await fetchFullTicketDetail();
+            const changedData = await _.differenceWith(newData, oldData, _.isEqual);
+
+            await StoreUpdatedData(changedData);
+
+            resolve();
 
         }catch(err){
 

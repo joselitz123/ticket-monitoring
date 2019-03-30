@@ -19,7 +19,10 @@ function userModel() {
         try {
             dbInstance(); //instantiate first the database connection
             db = mongoose.connection; 
-            db.on('error', ()=>{reject(console.error.bind(console, 'conection error:'))});
+            db.on('error', err=>{
+                logger.error(err, 'An issue issue occured in userModel');
+                reject(err);
+            });
             db.once('connected',()=>{                
 
                 const model = mongoose.model('User',userSchema);

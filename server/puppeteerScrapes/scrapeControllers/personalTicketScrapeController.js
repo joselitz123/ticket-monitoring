@@ -15,6 +15,7 @@ function personalTicketScrapeController(user){
     return new Promise(async (resolve, reject)=>{
 
         try {
+
             let tickets = [];
 
             const pages = await personalRecordPuppeteer(user);

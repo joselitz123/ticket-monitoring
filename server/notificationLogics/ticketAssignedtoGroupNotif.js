@@ -1,5 +1,4 @@
 const logger = require('../logger/loggerSettings')();
-const inserNotification = require('../dbQueries/notificationLogicQueries/insertNotification');
 const fetchNonCompletedTickets = require('../dbQueries/notificationLogicQueries/fetchNonCompletedTickets');
 const moment = require('moment-business-days');
 
@@ -31,11 +30,8 @@ function ticketAssignedtoGroupNotif(notif_types) {
                 return [...acc, data];
 
             }, []);
-
-
-            inserNotification(result, notifId);
         
-            resolve();
+            resolve(result);
         
         } catch (error) {
     

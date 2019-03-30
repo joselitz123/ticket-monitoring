@@ -1,6 +1,5 @@
 const logger = require('../logger/loggerSettings')();
 const fetchAutoTickets = require('../dbQueries/notificationLogicQueries/fetchAutoTickets');
-const inserNotification = require('../dbQueries/notificationLogicQueries/insertNotification');
 const moment = require('moment-business-days');
 
 /**
@@ -32,9 +31,7 @@ function autoTicketNotification(notif_types) {
 
             }, []);
 
-            await inserNotification(result, notifId);
-
-            resolve();
+            resolve(result);
             
         } catch (error) {
 

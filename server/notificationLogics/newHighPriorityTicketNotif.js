@@ -1,6 +1,6 @@
 const logger = require('../logger/loggerSettings')();
 const fetchHigherPriorityTicket = require('../dbQueries/notificationLogicQueries/fetchHighPriorityTickets');
-const inserNotification = require('../dbQueries/notificationLogicQueries/insertNotification');
+const moment = require('moment-business-days');
 
 function newHigherPriorityTicketNotif(notif_types) {
 
@@ -27,9 +27,7 @@ function newHigherPriorityTicketNotif(notif_types) {
 
             }, []);
 
-            inserNotification(result, notifId);
-
-            resolve();
+            resolve(result);
             
         } catch (error) {
 

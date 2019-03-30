@@ -27,25 +27,26 @@ module.exports = function(user){
 
             if (extractCount > 1) {
 
-                const arrayExecution = [];
-                
-                for (let index = 0; index > extractCount-1; index++) {
-                    
-                    if (index == extractCount) {
+                await [...Array(extractCount)].reduce( async(acc, curr, index) => {
 
+                    const ac = await acc;
+
+                    if (index == extractCount-1) {
+                        
                         await page.waitFor(1000);
                         contents.push(await page.content());
                         await page.close();
 
-                    }else{
+                    } else {
 
-                        contents.push(await page.content());
+                        await contents.push(await page.content());
                         await page.click("button[name='vcr_next']");
                         await page.waitForResponse('https://pgglobalenterprise.service-now.com/task_list.do');
+
                     }
 
 
-                }
+                }, Promise.resolve());
 
                 // $("button[name='vcr_next']").html()
                 

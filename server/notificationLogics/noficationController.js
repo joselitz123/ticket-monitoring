@@ -5,6 +5,7 @@ const resolvedTicketNotification = require('./resolvedTicketNotification');
 const autoTicketNotification = require('./autoTicketNotification');
 const newHighPriorityTicketNotif = require('./newHighPriorityTicketNotif');
 const ticketAssignedtoGroupNotif = require('./ticketAssignedtoGroupNotif');
+const insertNotification = require('../dbQueries/notificationLogicQueries/insertNotification');
 
 /**
  * Controller for the notfication
@@ -17,13 +18,23 @@ function notificationController() {
 
             const notif_types = await notificationTypes();
 
-            await Promise.all([
+            const collatedData = await Promise.all([
                 ticketNextUpdateEvaluator(notif_types),
                 resolvedTicketNotification(notif_types),
                 autoTicketNotification(notif_types),
                 newHighPriorityTicketNotif(notif_types),
                 ticketAssignedtoGroupNotif(notif_types)
             ]);
+
+            const rawData = await collatedData.reduce((acc, cur) => {
+
+                return [...acc,...cur];
+
+            },[]);
+
+            console.log(collatedData);
+
+            await insertNotification(rawData);
 
             resolve();
             

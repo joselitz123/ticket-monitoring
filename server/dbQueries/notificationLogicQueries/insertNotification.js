@@ -5,9 +5,8 @@ const { ObjectID } = require('mongodb');
 /**
  * Inserts the fetched For Action ticket data to database
  * @param {Array} data - Array of ticket data for action
- * @param {String} notification_id - id of the notification type
  */
-function insertNotification(data, notification_id) {
+function insertNotification(data) {
 
     return new Promise( async(resolve, reject) => {
 
@@ -15,12 +14,12 @@ function insertNotification(data, notification_id) {
 
             const forActionTicketCon = await notificationModel();
 
-            const notif_id = ObjectID(notification_id);
-
             data.map(ticketData => {
 
+                const { notif_id, ticket_id } = ticketData;
+
                 forActionTicketCon.findOneAndUpdate(
-                    {ticket_id: ticketData.ticket_id, time_acknowledged: undefined, notif_id: notif_id},
+                    {ticket_id: ticket_id, time_acknowledged: undefined, notif_id: ObjectID(notif_id)},
                     {...ticketData},
                     {upsert: true}
                 )

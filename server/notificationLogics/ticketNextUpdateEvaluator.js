@@ -1,5 +1,4 @@
 const logger = require('../logger/loggerSettings')();
-const insertNotification = require('../dbQueries/notificationLogicQueries/insertNotification');
 const fetchLatestTicketUpdateLog = require('../dbQueries/notificationLogicQueries/fetchLatestTicketUpdateLog');
 const moment = require('moment-business-days');
 
@@ -21,12 +20,11 @@ function ticketNextUpdateEvaluator(notif_types) {
                 workingWeekdays: [1, 2, 3, 4, 5]
             });
 
+            const secPerHour = 3600;
+
+            const hoursPerDay = 24;
 
             const result = variables.reduce((accumulator, current) => {
-
-                const secPerHour = 3600;
-
-                const hoursPerDay = 24;
 
                 const { tckt_nmbr, update_interval, divide_time, ticket_update, ticket_status} = current;
 
@@ -64,9 +62,7 @@ function ticketNextUpdateEvaluator(notif_types) {
 
             },[]);
 
-            await insertNotification(result, notifId);
-
-            resolve();
+            resolve(result);
 
         } catch (error) {
             
