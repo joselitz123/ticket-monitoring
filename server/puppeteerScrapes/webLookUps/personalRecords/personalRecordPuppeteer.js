@@ -15,7 +15,8 @@ module.exports = function(user){
 
             const page = await browser.newPage();
 
-            await page.goto(`https://pgglobalenterprise.service-now.com/task_list.do?sysparm_nostack=true&sysparm_query=active%3Dtrue%5Eassigned_to%3Djavascript:getMyAssignments()%5EORsys_created_by%3D${ user.shortname }%5Esys_class_name%3Dincident%5EORsys_class_name%3Dsc_req_item&sysparm_first_row=1&sysparm_view=&sysparm_clear_stack=true`, {timeout: 0})
+            // await page.goto(`https://pgglobalenterprise.service-now.com/task_list.do?sysparm_nostack=true&sysparm_query=active%3Dtrue%5Eassigned_to%3Djavascript:getMyAssignments()%5EORsys_created_by%3D${ user.shortname }%5Esys_class_name%3Dincident%5EORsys_class_name%3Dsc_req_item&sysparm_first_row=1&sysparm_view=&sysparm_clear_stack=true`, {timeout: 0})
+            await page.goto(`https://pgglobalenterprise.service-now.com/task_list.do?sysparm_view=&sysparm_first_row=1&sysparm_query=active%3Dtrue%5Eassigned_to%3Djavascript:getMyAssignments()%5EORsys_created_by%3D${ user.shortname }%5Esys_class_name%3Dincident%5EORsys_class_name%3Dsc_req_item%5Eassignment_group!%3Deb5359f2db17d740dcb15688dc961928&sysparm_clear_stack=true`, {timeout: 0})
             .catch(err=>{
                 logger.error(err,'Error while navigating to the active tickets of the user in personalRecordPuppeteer.js');
             });
@@ -24,8 +25,6 @@ module.exports = function(user){
             const length = await page.$eval('.text-align-right > span:nth-child(1) > .vcr_controls > .list_row_number_input > span:nth-child(2)', el=> el.innerHTML); 
 
             const extractCount = await Math.ceil(length/20);
-
-            console.log({extraCount: extractCount});
 
             if (extractCount > 1) {
 

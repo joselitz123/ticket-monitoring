@@ -32,6 +32,8 @@ function ticketNextUpdateEvaluator(notif_types) {
 
                 const hourUpdate = ((update_interval * divide_time) / secPerHour);
 
+                console.log()
+
                 if (hourUpdate % hoursPerDay == 0) {
                     
                     const nextUpdate = moment(date_updated).businessAdd((hourUpdate/hoursPerDay), "days");
@@ -43,7 +45,7 @@ function ticketNextUpdateEvaluator(notif_types) {
                         time_prompted: moment()
                     }
                     
-                    return nextUpdate.format('LL') >= moment().format('LL') ? [...accumulator, data] : accumulator;
+                    return moment().format('LL') >= nextUpdate.format('LL') ? [...accumulator, data] : accumulator;
 
                 } else {
 
@@ -58,7 +60,7 @@ function ticketNextUpdateEvaluator(notif_types) {
                         time_prompted: moment()
                     }
 
-                    return  hrBeforeNxtUpd.format('LLL') >= moment().format('LLL') ? [...accumulator, data] : accumulator;
+                    return  moment().format('LLL') >= hrBeforeNxtUpd.format('LLL') ? [...accumulator, data] : accumulator;
 
                 }
 
