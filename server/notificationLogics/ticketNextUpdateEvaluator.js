@@ -58,7 +58,7 @@ function ticketNextUpdateEvaluator(notif_types) {
                         time_prompted: moment()
                     }
 
-                    return  hrBeforeNxtUpd.format('LL') >= moment().format('LL') ? [...accumulator, data] : accumulator;
+                    return  hrBeforeNxtUpd.format('LLL') >= moment().format('LLL') ? [...accumulator, data] : accumulator;
 
                 }
 

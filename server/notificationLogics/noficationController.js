@@ -32,10 +32,6 @@ function notificationController() {
 
             },[]);
 
-            console.log({collatedData: collatedData});
-
-            console.log({rawData: rawData});
-
             await insertNotification(rawData);
 
             resolve();

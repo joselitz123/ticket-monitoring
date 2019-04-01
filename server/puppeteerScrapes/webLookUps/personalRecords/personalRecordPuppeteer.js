@@ -7,7 +7,7 @@ const logger = require('../../../logger/loggerSettings')();
 module.exports = function(user){
 
     return new Promise(async (resolve, reject)=>{
-        try {
+        try {          
             
             let contents = [];
 
@@ -25,6 +25,8 @@ module.exports = function(user){
 
             const extractCount = await Math.ceil(length/20);
 
+            console.log({extraCount: extractCount});
+
             if (extractCount > 1) {
 
                 await [...Array(extractCount)].reduce( async(acc, curr, index) => {
@@ -33,20 +35,24 @@ module.exports = function(user){
 
                     if (index == extractCount-1) {
                         
-                        await page.waitFor(1000);
                         contents.push(await page.content());
+                        await page.waitFor(1000);
                         await page.close();
 
                     } else {
 
+                        const currentTblEl = await page.$eval('.text-align-right > span:nth-child(1) > .vcr_controls > .list_row_number_input > span:nth-child(1)', el=> el.innerHTML); 
                         await contents.push(await page.content());
                         await page.click("button[name='vcr_next']");
-                        await page.waitForResponse('https://pgglobalenterprise.service-now.com/task_list.do');
+                        await page.waitForFunction(`document.getElementsByClassName("list_row_number_input")[0].value > ${ currentTblEl }`);
 
                     }
 
 
                 }, Promise.resolve());
+
+
+                console.log({contents: contents});
 
                 // $("button[name='vcr_next']").html()
                 
