@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ActionList from './actionList';
 import { showOptions } from '../../actions/home/optExtension/ticketNotif/actions';
+import { setSelectedTicketID } from '../../actions/home/ticketNotif/actions';
 
-const NotifList = ({data, showOptions}) =>{
+const NotifList = ({data, showOptions, setSelectedTicketID}) =>{
 
     if (data.length == 0) {
         
@@ -24,10 +25,10 @@ const NotifList = ({data, showOptions}) =>{
 
     return data.map(data => 
         (
-           <div key={data._id} className={`card priority_${data.ticket_details.priority.charAt(0)}`}>
+           <div key={data._id} className={`card priority_${data.ticket_details.priority.charAt(0)}`}  >
                <div className="card-header" id="headingOne">
                <h2 className="mb-0">
-                   <button className="btn btn-link" type="button" onContextMenu={e=>optExtension(e, data._id)} data-toggle="collapse" data-target={`#${data._id}`} aria-expanded="false" aria-controls={data._id}>
+                   <button className="btn btn-link" type="button" onContextMenu={e=>optExtension(e, data._id)} data-toggle="collapse" data-target={`#${data._id}`} aria-expanded="false" aria-controls={data._id} onClick={()=>setSelectedTicketID(data._id)} >
                    {`${data._id}: ${data.ticket_details.shrt_desc}`}
                    </button>
                </h2>
@@ -53,7 +54,8 @@ const NotifList = ({data, showOptions}) =>{
 
 NotifList.propTypes = {
     data: PropTypes.array.isRequired,
-    showOptions: PropTypes.func.isRequired
+    showOptions: PropTypes.func.isRequired,
+    setSelectedTicketID: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
@@ -62,4 +64,4 @@ const mapStateToProps = state => ({
 
 
 
-export default connect(mapStateToProps, { showOptions })(NotifList);
+export default connect(mapStateToProps, { showOptions, setSelectedTicketID })(NotifList);

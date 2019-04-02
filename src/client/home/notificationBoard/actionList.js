@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 const ActionList = ({action_list}) => {
 
@@ -17,11 +18,8 @@ const ActionList = ({action_list}) => {
             </td>
             <td>{list.notif}</td>
             <td className="td-actions text-right">
-                <button type="button" rel="tooltip" title="" className="btn btn-white btn-link btn-sm" data-original-title="Edit Task">
-                <i className="material-icons">edit</i>
-                </button>
-                <button type="button" rel="tooltip" title="" className="btn btn-white btn-link btn-sm" data-original-title="Remove">
-                <i className="material-icons">close</i>
+                <button type="button" rel="tooltip" title="" className="btn btn-white btn-link btn-sm" data-original-title="More Option">
+                <i className="material-icons">more_vert</i>
                 </button>
             </td>
         </tr>
@@ -32,4 +30,4 @@ ActionList.propTypes = {
     action_list: PropTypes.array.isRequired
 }
 
-export default ActionList;
+export default connect(null, {  })(ActionList);
