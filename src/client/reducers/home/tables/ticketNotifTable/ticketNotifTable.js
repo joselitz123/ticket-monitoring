@@ -252,7 +252,6 @@ const initialState = {
            }
     ],
     selectedTicketID: '',
-    selectedNotifID: ''
 }
 
 export default function ticketNotifTableReducer(state = initialState, action) {

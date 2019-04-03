@@ -6,22 +6,22 @@ const ActionList = ({action_list}) => {
 
     return action_list.map(list => (
         <tr key={list.notif_id}>
-            <td>
+            {/* <td>
                 <div className="form-check">
                 <label className="form-check-label">
-                    <input className="form-check-input" type="checkbox" value=""  />
+                    <input className="form-check-input" type="checkbox" value="" checked={true} />
                     <span className="form-check-sign">
                         <span className="check"></span>
                     </span>
                 </label>
                 </div>
-            </td>
-            <td>{list.notif}</td>
+            </td> */}
             <td className="td-actions text-right">
-                <button type="button" rel="tooltip" title="" className="btn btn-white btn-link btn-sm" data-original-title="More Option">
-                <i className="material-icons">more_vert</i>
+                <button type="button" rel="tooltip" title="" className="btn btn-white btn-link btn-sm" data-original-title="Dismiss">
+                <i className="material-icons">clear</i>
                 </button>
             </td>
+            <td>{list.notif}</td>            
         </tr>
     ))
 }
