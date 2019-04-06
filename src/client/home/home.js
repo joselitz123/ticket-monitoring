@@ -6,6 +6,7 @@ import TicketPriorityBoard from './ticketPriorityBoard/ticketPriorityBoard';
 import DoughnutGraph from './graphs/doughnutGraph';
 import PieGraphModal from './modals/pieGraphModal/pieGraphModal';
 import NotificationBoard from './notificationBoard/notificationBoard';
+import DismissConfModal from './modals/dismissConfModal/dismissConfModal';
 
 const HomeLayout = ()=>{
 		
@@ -16,12 +17,13 @@ const HomeLayout = ()=>{
 				<div className="container-fluid" >
 					<TicketPriorityBoard />
 
-				<div className="row">
-					<DoughnutGraph />
-					<PieGraphModal />
-					<NotificationBoard />
+					<div className="row">
+						<DoughnutGraph />
+						<PieGraphModal />
+						<DismissConfModal />
+						<NotificationBoard />
 
-				</div>
+					</div>
 				</div>
 			</div>
 		)

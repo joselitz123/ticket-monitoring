@@ -1,33 +1,41 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { setSelectedNotifID, toggleDismissConfirmationPromp } from '../../actions/home/ticketNotif/actions';
+import PropTypes from 'prop-types';
 
-const ActionList = ({action_list}) => {
+const ActionList = ({action_list, setSelectedNotifID, toggleDismissConfirmationPromp}) => {
+
+    const dismissPrompHandler = id => {
+        
+        setSelectedNotifID(id);
+
+        toggleDismissConfirmationPromp(true);
+
+    }
 
     return action_list.map(list => (
-        <tr key={list.notif_id}>
-            {/* <td>
-                <div className="form-check">
-                <label className="form-check-label">
-                    <input className="form-check-input" type="checkbox" value="" checked={true} />
-                    <span className="form-check-sign">
-                        <span className="check"></span>
-                    </span>
-                </label>
-                </div>
-            </td> */}
-            <td className="td-actions text-right">
-                <button type="button" rel="tooltip" title="" className="btn btn-white btn-link btn-sm" data-original-title="Dismiss">
-                <i className="material-icons">clear</i>
-                </button>
-            </td>
+        <tr key={list.notif_id} >     
             <td>{list.notif}</td>            
+            <td className="options" style={{"display": "flex"}} >
+                <a href="#" data-toggle="tooltip" title="Dismiss" onClick={()=>dismissPrompHandler(list.notif_id)} style={{"margin": "0px 5px"}} >
+                    <i className="material-icons">clear</i>
+                </a>
+                <a  href="#" onClick={()=>setSelectedNotifID(list.notif_id)} style={{"margin": "0px 5px"}} >
+                    <i className="material-icons">snooze</i>
+                </a>
+            </td>
         </tr>
     ))
+}
+
+ActionList.propTypes = {
+    ActionList: PropTypes.array.isRequired,
+    setSelectedNotifID: PropTypes.func.isRequired,
+    toggleDismissConfirmationPromp: PropTypes.func.isRequired
 }
 
 ActionList.propTypes = {
     action_list: PropTypes.array.isRequired
 }
 
-export default connect(null, {  })(ActionList);
+export default connect(null, { setSelectedNotifID, toggleDismissConfirmationPromp })(ActionList);

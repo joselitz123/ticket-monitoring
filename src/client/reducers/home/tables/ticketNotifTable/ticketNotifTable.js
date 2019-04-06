@@ -1,4 +1,4 @@
-import { POPULATE_DATA, SET_SELECTED_TICKET_ID } from '../../../../actions/home/ticketNotif/actionTypes';
+import { POPULATE_DATA, SET_SELECTED_TICKET_ID, SET_SELECTED_NOTIF_ID, TOGGLE_DISMISS_CONFIRMATION_PROMP } from '../../../../actions/home/ticketNotif/actionTypes';
 
 const initialState = {
     data: [
@@ -252,6 +252,8 @@ const initialState = {
            }
     ],
     selectedTicketID: '',
+    selectedNotifID: '',
+    toggleDismissPromp: false
 }
 
 export default function ticketNotifTableReducer(state = initialState, action) {
@@ -268,6 +270,18 @@ export default function ticketNotifTableReducer(state = initialState, action) {
 
             return {
                 ...state, selectedTicketID: action.payload
+            }
+
+        case SET_SELECTED_NOTIF_ID:
+
+            return {
+                ...state, selectedNotifID: action.payload
+            }
+
+        case TOGGLE_DISMISS_CONFIRMATION_PROMP: 
+
+            return {
+                ...state, toggleDismissPromp: action.payload
             }
     
         default: 
