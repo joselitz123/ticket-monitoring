@@ -1,4 +1,4 @@
-import { POPULATE_DATA, SET_SELECTED_TICKET_ID, SET_SELECTED_NOTIF_ID, TOGGLE_DISMISS_CONFIRMATION_PROMP } from './actionTypes';
+import { POPULATE_DATA, SET_SELECTED_TICKET_ID, SET_SELECTED_NOTIF_ID, TOGGLE_DISMISS_CONFIRMATION_PROMP, UPDATE_NOTIF_DATA } from './actionTypes';
 
 export const populateData = data => dispatch => {
     dispatch({
@@ -27,3 +27,4 @@ export const toggleDismissConfirmationPromp = boolVal => dispatch => {
         payload: boolVal
     });
 }
+

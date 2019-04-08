@@ -253,7 +253,9 @@ const initialState = {
     ],
     selectedTicketID: '',
     selectedNotifID: '',
-    toggleDismissPromp: false
+    toggleDismissPromp: false,
+    notifDismissAnimation: false,
+    ticketDismissAnimation: false
 }
 
 export default function ticketNotifTableReducer(state = initialState, action) {

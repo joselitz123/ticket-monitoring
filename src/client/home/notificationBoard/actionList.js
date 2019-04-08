@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { setSelectedNotifID, toggleDismissConfirmationPromp } from '../../actions/home/ticketNotif/actions';
 import PropTypes from 'prop-types';
 
-const ActionList = ({action_list, setSelectedNotifID, toggleDismissConfirmationPromp}) => {
+const ActionList = ({action_list, setSelectedNotifID, toggleDismissConfirmationPromp, notif_id, dismiss_animation}) => {
 
     const dismissPrompHandler = id => {
         
@@ -14,7 +14,7 @@ const ActionList = ({action_list, setSelectedNotifID, toggleDismissConfirmationP
     }
 
     return action_list.map(list => (
-        <tr key={list.notif_id} >     
+        <tr key={list.notif_id} className={`animated ${list.notif_id == notif_id && dismiss_animation ? 'fadeOutRight' : '' }`} >     
             <td>{list.notif}</td>            
             <td className="options" style={{"display": "flex"}} >
                 <a href="#" data-toggle="tooltip" title="Dismiss" onClick={()=>dismissPrompHandler(list.notif_id)} style={{"margin": "0px 5px"}} >
@@ -28,14 +28,18 @@ const ActionList = ({action_list, setSelectedNotifID, toggleDismissConfirmationP
     ))
 }
 
+
 ActionList.propTypes = {
-    ActionList: PropTypes.array.isRequired,
+    action_list: PropTypes.array.isRequired,
+    dismiss_animation: PropTypes.bool.isRequired,
     setSelectedNotifID: PropTypes.func.isRequired,
-    toggleDismissConfirmationPromp: PropTypes.func.isRequired
+    toggleDismissConfirmationPromp: PropTypes.func.isRequired,
+    notif_id: PropTypes.string.isRequired
 }
 
-ActionList.propTypes = {
-    action_list: PropTypes.array.isRequired
-}
+const mapStateToProps = state => ({
+    dismiss_animation: state.ticketNotifTableReducer.notifDismissAnimation,
+    notif_id: state.ticketNotifTableReducer.selectedNotifID
+});
 
-export default connect(null, { setSelectedNotifID, toggleDismissConfirmationPromp })(ActionList);
+export default connect(mapStateToProps, { setSelectedNotifID, toggleDismissConfirmationPromp })(ActionList);
