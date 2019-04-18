@@ -3,14 +3,24 @@ import { connect } from 'react-redux';
 import { setSelectedNotifID, toggleDismissConfirmationPromp } from '../../actions/home/ticketNotif/actions';
 import PropTypes from 'prop-types';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { normalize, schema } from 'normalizr';
 
-const ActionList = ({ action_list, setSelectedNotifID, toggleDismissConfirmationPromp, notif_id, dismiss_animation }) => {
+const ActionList = ({ action_list, setSelectedNotifID, toggleDismissConfirmationPromp}) => {
 
     const dismissPrompHandler = id => {
 
         setSelectedNotifID(id);
 
-        toggleDismissConfirmationPromp(true);
+        toggleDismissConfirmationPromp(true);        
+
+    }
+
+    /**
+     * Evaluates if a ticket has a notifications in it, if it has
+     * zero notif, then remove the ticket
+     */
+    const zeroNotifEval = () => {
+
 
     }
 
@@ -38,15 +48,13 @@ const ActionList = ({ action_list, setSelectedNotifID, toggleDismissConfirmation
 
 ActionList.propTypes = {
     action_list: PropTypes.array.isRequired,
-    dismiss_animation: PropTypes.bool.isRequired,
     setSelectedNotifID: PropTypes.func.isRequired,
     toggleDismissConfirmationPromp: PropTypes.func.isRequired,
-    notif_id: PropTypes.string.isRequired
 }
 
-const mapStateToProps = state => ({
-    dismiss_animation: state.ticketNotifTableReducer.notifDismissAnimation,
-    notif_id: state.ticketNotifTableReducer.selectedNotifID
-});
+const mapStateToProps = state => {
+        
+    // notif_id: state.ticketNotifTableReducer.selectedNotifID,
+};
 
 export default connect(mapStateToProps, { setSelectedNotifID, toggleDismissConfirmationPromp })(ActionList);

@@ -2,11 +2,11 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
-import { toggleDismissConfirmationPromp, setSelectedNotifID, populateData } from '../../../actions/home/ticketNotif/actions';
+import { toggleDismissConfirmationPromp, setSelectedNotifID, populateDataTickets } from '../../../actions/home/ticketNotif/actions';
+import _ from 'lodash';
 
 
-
-const DismissConfModal = ({modalToggle, setSelectedNotifID, toggleDismissConfirmationPromp, ticketID, populateData, notifData, notifID}) => {
+const DismissConfModal = ({ modalToggle, setSelectedNotifID, toggleDismissConfirmationPromp, ticketID, populateDataTickets, notifID, notifs}) => {
 
     const dismissHandler = () => {
 
@@ -16,14 +16,21 @@ const DismissConfModal = ({modalToggle, setSelectedNotifID, toggleDismissConfirm
     }
 
     const updateNotificationData = () => {
+        
+        let NotifInidexToRemove = 0;
 
-        const ticketIndex = notifData.map(ticket => ticket._id).indexOf(ticketID);
+        const cloned_notifs = _.cloneDeep(notifs); // Cloned the notifs to avoid mutating the original state in redux directly
 
-        const notifIndex = notifData[ticketIndex].notifications.map(notif => notif.notif_id).indexOf(notifID);
+        cloned_notifs[ticketID].notifications.find((notif, index) => {
+            if (notif == notifID) {
+                NotifInidexToRemove = index;
+                return notif;
+            }
+        });
 
-        notifData[ticketIndex].notifications.splice(notifIndex, 1);
+        cloned_notifs[ticketID].notifications.splice(NotifInidexToRemove, 1);
 
-        populateData(notifData);
+        populateDataTickets(cloned_notifs);
 
         dismissHandler();
 
@@ -53,16 +60,16 @@ DismissConfModal.propTypes = {
     toggleDismissConfirmationPromp: PropTypes.func.isRequired,
     setSelectedNotifID: PropTypes.func.isRequired,
     ticketID: PropTypes.string.isRequired,
-    notifData: PropTypes.array.isRequired,
-    populateData: PropTypes.func.isRequired,
-    notifID: PropTypes.string.isRequired
+    populateDataTickets: PropTypes.func.isRequired,
+    notifID: PropTypes.string.isRequired,
+    notifs: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
     modalToggle: state.ticketNotifTableReducer.toggleDismissPromp,
     ticketID: state.ticketNotifTableReducer.selectedTicketID,
-    notifData: state.ticketNotifTableReducer.data,
-    notifID: state.ticketNotifTableReducer.selectedNotifID
+    notifID: state.ticketNotifTableReducer.selectedNotifID,
+    notifs: state.ticketNotifTableReducer.tickets
 });
 
-export default connect(mapStateToProps, { toggleDismissConfirmationPromp, setSelectedNotifID, populateData })(DismissConfModal);
+export default connect(mapStateToProps, { toggleDismissConfirmationPromp, setSelectedNotifID, populateDataTickets })(DismissConfModal);

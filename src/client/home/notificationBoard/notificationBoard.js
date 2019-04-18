@@ -5,6 +5,7 @@ import io from 'socket.io-client';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { populateData } from '../../actions/home/ticketNotif/actions';
+import fakeData from './fakedata';
 
 class NotificationBoard extends Component{
 
@@ -12,11 +13,13 @@ class NotificationBoard extends Component{
 
         const socket = io.connect('http://localhost:3000/action_notification');
 
-        socket.on('action_notification', data => {
+        // socket.on('action_notification', data => {
 
-            this.props.populateData(data);
+        //     this.props.populateData(data);
 
-        });
+        // });
+
+        this.props.populateData(fakeData);
 
     }
 
