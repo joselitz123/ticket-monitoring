@@ -6,6 +6,7 @@ import toggleModalForPieGraph from './home/modals/pieGraphReducer/pieGrahpReduce
 import setPieGraphTableData from './home/tables/pieGraphTable/tableReducer';
 import ticketNotifTableReducer from './home/tables/ticketNotifTable/ticketNotifTable';
 import ticketNotifOptExtension from './home/opt_extension/ticketNotif/ticketNotifReducer';
+import dismissConfReducer from './home/modals/dismissConfReducer/dismissConfReducer';
 
 export default combineReducers({
     setUserName: setUserName,
@@ -14,5 +15,6 @@ export default combineReducers({
     toggleModalForPieGraph: toggleModalForPieGraph,
     setPieGraphTableData: setPieGraphTableData,
     ticketNotifTableReducer: ticketNotifTableReducer,
-    ticketNotifOptExtension: ticketNotifOptExtension
+    ticketNotifOptExtension: ticketNotifOptExtension,
+    dismissConfReducer: dismissConfReducer
 });

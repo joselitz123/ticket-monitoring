@@ -8,6 +8,8 @@ const intervalFunctions = require('./intervalFunctions');
 const test = require('./dbQueries/forDataProviderQueries/ticketPriorityCount');
 const userAccount = require('./account');
 const perAppTicketComponent = require('./components/appTicketComponents/PerAppTicketComponent');
+const ticketDetailComponent = require('./components/ticketDetailsComponent/ticketDetailsComponent');
+
 
 let access_token;
 let user;
@@ -46,13 +48,7 @@ router.get('/auth/login', async function(req, res, next){
 
 router.get('/applications/:app_id/tickets', function(req, res){ perAppTicketComponent(req, res) });
 
-router.get('/tickets/alltickets', async function(req, res){
-
-	const result = await test();
-
-	res.send(result);
-
-});
+router.get('/tickets/:ticket_id/details', function (req, res) { ticketDetailComponent(req, res) });
 
 
 module.exports = router;

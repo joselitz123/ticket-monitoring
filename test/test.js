@@ -5,7 +5,7 @@ const path = require('path');
 const moment = require('moment-business-days');
 
 const accessPoint = require('../server/puppeteerScrapes/accessPoint');
-const test = require('../server/puppeteerScrapes/webLookUps/personalRecords/personalRecordPuppeteer');
+const test = require('../server/dbQueries/forDataProviderQueries/ticketDetails');
 // const notifTypes = require('../server/notificationLogics/notificationTypes');
 // const test1 = require('../server/notificationLogics/setupNotificationData');
 
@@ -15,13 +15,7 @@ describe('Array', function() {
 
     it('should have data', async()=>{
 
-        await accessPoint();
-
-        const user = {
-            shortname: phala.jl
-        }
-
-        const result = await test(user); 
+        const result = await test('RITM1007694'); 
 
         console.log(JSON.stringify(result, null, 1));
 

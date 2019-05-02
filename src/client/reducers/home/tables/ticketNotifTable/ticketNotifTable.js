@@ -1,17 +1,11 @@
-import { POPULATE_DATA, SET_SELECTED_TICKET_ID, SET_SELECTED_NOTIF_ID, TOGGLE_DISMISS_CONFIRMATION_PROMP, POPULATE_DATA_TICKETS } from '../../../../actions/home/ticketNotif/actionTypes';
-import { tickets } from '../../../../actions/home/ticketNotif/schema';
-import { normalize } from 'normalizr';
+import { POPULATE_DATA, POPULATE_DATA_TICKETS } from '../../../../actions/home/ticketNotif/actionTypes';
+import { SET_SELECTED_TICKET_ID, SET_SELECTED_NOTIF_ID, TOGGLE_DISMISS_CONFIRMATION_PROMP } from '../../../../actions/home/modals/dismisssConfModal/actionTypes';
 import { createSelector } from 'reselect';
 
 const initialState = {
     notifications: {},
     ticket_details: {},
     tickets: {},
-    selectedTicketID: '',
-    selectedNotifID: '',
-    toggleDismissPromp: false,
-    notifDismissAnimation: false,
-    ticketDismissAnimation: false
 }
 
 export default function ticketNotifTableReducer(state = initialState, action) {
@@ -34,24 +28,6 @@ export default function ticketNotifTableReducer(state = initialState, action) {
                 tickets: action.payload
             }
 
-        case SET_SELECTED_TICKET_ID:
-
-            return {
-                ...state, selectedTicketID: action.payload
-            }
-
-        case SET_SELECTED_NOTIF_ID:
-
-            return {
-                ...state, selectedNotifID: action.payload
-            }
-
-        case TOGGLE_DISMISS_CONFIRMATION_PROMP:
-
-            return {
-                ...state, toggleDismissPromp: action.payload
-            }
-
         default:
 
             return state;
@@ -60,12 +36,13 @@ export default function ticketNotifTableReducer(state = initialState, action) {
 
 }
 
-const convertObjTicketsToArr = state => Object.values(state.ticketNotifTableReducer.tickets);
+const convertObjTicketsToArrAndFilter = state => Object.values(state.ticketNotifTableReducer.tickets).filter(ticket => ticket.notifications.length > 0);
 const selectTicketDetails = state => state.ticketNotifTableReducer.ticket_details;
 const selectTicketNotifications = state => state.ticketNotifTableReducer.notifications;
 
+
 export const makeTicketNotifications = createSelector(
-    [convertObjTicketsToArr, selectTicketDetails, selectTicketNotifications],
+    [convertObjTicketsToArrAndFilter, selectTicketDetails, selectTicketNotifications],
     (tickets, ticketDetails, notifications) => tickets.map(ticket => {
 
         const selectedNotifications = notif_ids => notif_ids.map(id => notifications[id]);

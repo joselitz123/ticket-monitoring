@@ -13,13 +13,13 @@ class NotificationBoard extends Component{
 
         const socket = io.connect('http://localhost:3000/action_notification');
 
-        // socket.on('action_notification', data => {
+        socket.on('action_notification', data => {
 
-        //     this.props.populateData(data);
+            this.props.populateData(data);
 
-        // });
+        });
 
-        this.props.populateData(fakeData);
+        // this.props.populateData(fakeData);
 
     }
 
@@ -32,7 +32,7 @@ class NotificationBoard extends Component{
                     <h4 className="card-title">For your Attention / Action</h4>
                     </div>
                     <div className="card-body table-responsive">
-                        <div className="accordion" id="ticketNotifAcc">
+                        <div className="accordion" id="ticketNotifAcc" style={{"overflowX": "hidden"}}>
                             <NotifList  />
                             <OptExtension />
                         </div>

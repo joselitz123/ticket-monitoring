@@ -1,3 +1,52 @@
+/* .item-enter, .notif_list-enter {
+	opacity: 0;
+}
+.item-enter-active, .notif_list-enter-active {
+	opacity: 1;
+	transition: opacity 500ms ease-in;
+} */
+
+.item-exit, .notif_list-exit{
+	-webkit-animation-duration: .5s;
+	animation-duration: .5s;
+	-webkit-animation-fill-mode: both;
+	animation-fill-mode: both;
+}
+/* .item-exit-active {
+	opacity: 0;
+	transition: opacity 500ms ease-in;
+} */
+
+@-webkit-keyframes fadeOutRight {
+	from {
+		opacity: 1;
+	}
+
+	to {
+		opacity: 0;
+		-webkit-transform: translate3d(100%, 0, 0);
+		transform: translate3d(100%, 0, 0);
+	}
+}
+
+@keyframes fadeOutRight {
+	from {
+		opacity: 1;
+	}
+
+	to {
+		opacity: 0;
+		-webkit-transform: translate3d(100%, 0, 0);
+		transform: translate3d(100%, 0, 0);
+	}
+}
+
+.item-exit-active, .notif_list-exit-active {
+	-webkit-animation-name: fadeOutRight;
+	animation-name: fadeOutRight;
+}
+
+
 .search-query{
 	height: 27px;
 }
@@ -188,50 +237,3 @@ table.dataTable.display tbody td {
 			background-color: #29324a;
 		}
 
-.item-enter {
-	opacity: 0;
-}
-.item-enter-active {
-	opacity: 1;
-	transition: opacity 500ms ease-in;
-}
-
-.item-exit {
-	-webkit-animation-duration: .5s;
-	animation-duration: .5s;
-	-webkit-animation-fill-mode: both;
-	animation-fill-mode: both;
-}
-/* .item-exit-active {
-	opacity: 0;
-	transition: opacity 500ms ease-in;
-} */
-
-@-webkit-keyframes fadeOutRight {
-	from {
-		opacity: 1;
-	}
-
-	to {
-		opacity: 0;
-		-webkit-transform: translate3d(100%, 0, 0);
-		transform: translate3d(100%, 0, 0);
-	}
-}
-
-@keyframes fadeOutRight {
-	from {
-		opacity: 1;
-	}
-
-	to {
-		opacity: 0;
-		-webkit-transform: translate3d(100%, 0, 0);
-		transform: translate3d(100%, 0, 0);
-	}
-}
-
-.item-exit-active {
-	-webkit-animation-name: fadeOutRight;
-	animation-name: fadeOutRight;
-}

@@ -1,4 +1,4 @@
-import { SHOW_OPTIONS, HIDE_OPTIONS } from './actionTypes';
+import { SHOW_OPTIONS, HIDE_OPTIONS, SET_TICKET_NO } from './actionTypes';
 
 
 /**
@@ -11,10 +11,14 @@ export const showOptions = data => dispatch => {
         payload: {
             show: true,
             x_coord: data.x_coord,
-            y_coord: data.y_coord,
-            ticket_no: data.ticket_no
+            y_coord: data.y_coord
         }
-    })
+    });
+
+    dispatch({
+        type: SET_TICKET_NO,
+        payload: data.ticket_no
+    });
 }
 
 export const hideOptions = () => dispatch => {
@@ -23,8 +27,16 @@ export const hideOptions = () => dispatch => {
         payload: {
             show: false,
             x_coord: 0,
-            y_coord: 0,
-            ticket_no: ''
+            y_coord: 0
         }
     })
+}
+
+export const setTicketNo = ticket_no => dispatch => {
+
+    dispatch({
+        type: SET_TICKET_NO,
+        payload: ticket_no
+    })
+
 }

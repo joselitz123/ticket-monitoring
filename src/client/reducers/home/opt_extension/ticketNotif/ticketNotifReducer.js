@@ -1,6 +1,6 @@
-import { SHOW_OPTIONS, HIDE_OPTIONS } from '../../../../actions/home/optExtension/ticketNotif/actionTypes';
+import { SHOW_OPTIONS, HIDE_OPTIONS, SET_TICKET_NO } from '../../../../actions/home/optExtension/ticketNotif/actionTypes';
 
-const initialState ={ 
+const initialState = {
     show: false,
     y_coord: 0,
     x_coord: 0,
@@ -14,13 +14,19 @@ export default function ticketNotifOptExtensionReducer(state = initialState, act
         case HIDE_OPTIONS:
 
             return {
-                ...state, 
+                ...state,
                 show: action.payload.show,
                 y_coord: action.payload.y_coord,
-                x_coord: action.payload.x_coord,
-                ticket_no: action.payload.ticket_no
+                x_coord: action.payload.x_coord
             }
-    
+
+        case SET_TICKET_NO:
+
+            return {
+                ...state,
+                ticket_no: action.payload
+            }
+
         default:
 
             return state;
