@@ -14,7 +14,7 @@ class OptExtension extends Component {
         this.scrollHandler = this.scrollHandler.bind(this);
         this.removeEvent = this.removeEvent.bind(this);
         this.openTicketInBrowser = this.openTicketInBrowser.bind(this);
-        this.viewTicketDetailsHander = this.viewTicketDetailsHander.bind(this);
+        this.viewTicketDetailsHandler = this.viewTicketDetailsHandler.bind(this);
     }
 
     addEvent() {
@@ -57,7 +57,7 @@ class OptExtension extends Component {
 
     }
 
-    viewTicketDetailsHander() {
+    viewTicketDetailsHandler() {
 
         const { setTicketNo, ticket_no, fetchDataAndToggleModal } = this.props;
 
@@ -82,7 +82,7 @@ class OptExtension extends Component {
                 'top': y_coord
             }}>
                 <ul>
-                    <a href="#" onClick={this.viewTicketDetailsHander}><li>View ticket details</li></a>
+                    <a href="#" onClick={this.viewTicketDetailsHandler}><li>View ticket details</li></a>
                     <a href="#"><li>View updates</li></a>
                     <a href="#" onClick={this.openTicketInBrowser}><li>Open ticket in browser</li></a>
                 </ul>

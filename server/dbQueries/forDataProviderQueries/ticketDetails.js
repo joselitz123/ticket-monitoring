@@ -58,7 +58,7 @@ function ticketDetails(ticket) {
                         priority: '$priority.priority_name'
                     }
                 },
-                { $project: { app_id: 0, __v: 0, status_id: 0, ticket_priority_id: 0 } }
+                { $project: { app_id: 0, __v: 0, status_id: 0, ticket_priority_id: 0, user_id: 0 } }
             ]).then(data => {
 
                 resolve(data);

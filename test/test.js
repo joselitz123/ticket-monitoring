@@ -5,7 +5,7 @@ const path = require('path');
 const moment = require('moment-business-days');
 
 const accessPoint = require('../server/puppeteerScrapes/accessPoint');
-const test = require('../server/dbQueries/forDataProviderQueries/ticketDetails');
+const test = require('../server/dbQueries/forDataProviderQueries/fetchTicketUpdates');
 // const notifTypes = require('../server/notificationLogics/notificationTypes');
 // const test1 = require('../server/notificationLogics/setupNotificationData');
 

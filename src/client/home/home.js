@@ -1,12 +1,10 @@
-import React, { Component, Fragment } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types'
-import { loadTicketData } from '../actions/electronActions/actions';
+import React from 'react';
 import TicketPriorityBoard from './ticketPriorityBoard/ticketPriorityBoard';
 import DoughnutGraph from './graphs/doughnutGraph';
 import PieGraphModal from './modals/pieGraphModal/pieGraphModal';
 import NotificationBoard from './notificationBoard/notificationBoard';
 import DismissConfModal from './modals/dismissConfModal/dismissConfModal';
+import TicketDetailsModal from './modals/ticketDetailsModal/ticketDetailsModal'
 
 const HomeLayout = ()=>{
 		
@@ -21,6 +19,7 @@ const HomeLayout = ()=>{
 						<DoughnutGraph />
 						<PieGraphModal />
 						<DismissConfModal />
+						<TicketDetailsModal />
 						<NotificationBoard />
 
 					</div>

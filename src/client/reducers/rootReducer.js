@@ -7,6 +7,7 @@ import setPieGraphTableData from './home/tables/pieGraphTable/tableReducer';
 import ticketNotifTableReducer from './home/tables/ticketNotifTable/ticketNotifTable';
 import ticketNotifOptExtension from './home/opt_extension/ticketNotif/ticketNotifReducer';
 import dismissConfReducer from './home/modals/dismissConfReducer/dismissConfReducer';
+import ticketDetailsReducer from './home/modals/ticketDetailsReducer/ticketDetailsReducer';
 
 export default combineReducers({
     setUserName: setUserName,
@@ -16,5 +17,6 @@ export default combineReducers({
     setPieGraphTableData: setPieGraphTableData,
     ticketNotifTableReducer: ticketNotifTableReducer,
     ticketNotifOptExtension: ticketNotifOptExtension,
-    dismissConfReducer: dismissConfReducer
+    dismissConfReducer: dismissConfReducer,
+    ticketDetailsReducer: ticketDetailsReducer
 });

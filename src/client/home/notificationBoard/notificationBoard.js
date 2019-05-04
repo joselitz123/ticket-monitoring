@@ -5,7 +5,6 @@ import io from 'socket.io-client';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { populateData } from '../../actions/home/ticketNotif/actions';
-import fakeData from './fakedata';
 
 class NotificationBoard extends Component{
 
@@ -18,8 +17,6 @@ class NotificationBoard extends Component{
             this.props.populateData(data);
 
         });
-
-        // this.props.populateData(fakeData);
 
     }
 
