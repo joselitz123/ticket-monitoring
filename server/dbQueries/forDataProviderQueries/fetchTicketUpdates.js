@@ -3,10 +3,12 @@ const logger = require('../../logger/loggerSettings')();
 
 
 /**
- * 
- * @param {*} ticket_id - ticket to fetch the updates
+ * fetchTicketUpdates
+ * @param {String} ticket_id - ticket to fetch the updates
  */
 const fetchTicketUpdates = (ticket_id) => {
+
+
     
     return new Promise(async (resolve, reject) => {
 
@@ -14,7 +16,20 @@ const fetchTicketUpdates = (ticket_id) => {
 
             const ticketUpdateCon = await ticketUpdateModel();
 
-            ticketUpdateCon.find({ ticket_id: ticket_id})
+            ticketUpdateCon.aggregate([
+                {$match: {ticket_id: ticket_id}},
+                {$lookup: {
+                    from: 'biops_resources',
+                    let: {resource_id: '$resource_id'},
+                    pipeline: [
+                        {$match: {$expr: {$eq: ['$$resource_id', '$_id']}}}
+                    ],
+                    as: 'resource'
+                }},
+                {$unwind: '$resource'},
+                {$addFields: {resource: '$resource.resource_name'}},
+                {$project: {__v: 0, resource_id: 0}}
+            ])
             .then(data => {
 
                 resolve(data);
@@ -26,9 +41,7 @@ const fetchTicketUpdates = (ticket_id) => {
 
                 reject(err);
 
-            })
-
-            resolve();
+            });
             
         } catch (error) {
 

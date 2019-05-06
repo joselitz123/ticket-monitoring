@@ -15,7 +15,9 @@ describe('Array', function() {
 
     it('should have data', async()=>{
 
-        const result = await test('RITM1007694'); 
+        const result = await test('INC3203646'); 
+
+        assert.notEqual(result, undefined);
 
         console.log(JSON.stringify(result, null, 1));
 

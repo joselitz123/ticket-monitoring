@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { hideOptions, setTicketNo } from '../../actions/home/optExtension/ticketNotif/actions';
 import { fetchDataAndToggleModal } from '../../actions/home/modals/ticketDetailModal/actions';
+import { fetchTicketUpdateLogs } from '../../actions/home/modals/ticketUpdateLogs/actions';
 const { shell } = window.require('electron');
 
 class OptExtension extends Component {
@@ -69,7 +70,7 @@ class OptExtension extends Component {
 
     render() {
 
-        const { show, x_coord, y_coord } = this.props;
+        const { show, x_coord, y_coord, fetchTicketUpdateLogs, ticket_no } = this.props;
 
         show ? this.addEvent() : this.removeEvent();
 
@@ -83,7 +84,7 @@ class OptExtension extends Component {
             }}>
                 <ul>
                     <a href="#" onClick={this.viewTicketDetailsHandler}><li>View ticket details</li></a>
-                    <a href="#"><li>View updates</li></a>
+                    <a href="#" onClick={() => fetchTicketUpdateLogs(ticket_no)}><li>View updates</li></a>
                     <a href="#" onClick={this.openTicketInBrowser}><li>Open ticket in browser</li></a>
                 </ul>
             </div>
@@ -109,7 +110,8 @@ OptExtension.propTypes = {
     ticket: PropTypes.string.isRequired,
     ticket_no: PropTypes.string.isRequired,
     fetchDataAndToggleModal: PropTypes.func.isRequired,
-    setTicketNo: PropTypes.func.isRequired
+    setTicketNo: PropTypes.func.isRequired,
+    fetchTicketUpdateLogs: PropTypes.func.isRequired
 }
 
-export default connect(mapStateToProps, { hideOptions, fetchDataAndToggleModal, setTicketNo })(OptExtension);
+export default connect(mapStateToProps, { hideOptions, fetchDataAndToggleModal, setTicketNo, fetchTicketUpdateLogs })(OptExtension);

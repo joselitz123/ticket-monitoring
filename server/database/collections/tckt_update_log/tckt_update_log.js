@@ -28,7 +28,7 @@ function tckt_update_log(){
             });
 
             db.once('connected',()=>{
-                resolve(mongoose.model('Tckt_update_logs',tckt_update_logSchema));
+                resolve(mongoose.model('Tckt_update_log',tckt_update_logSchema));
             });
             
         } catch (error) {
