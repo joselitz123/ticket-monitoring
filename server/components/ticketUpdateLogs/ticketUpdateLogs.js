@@ -9,11 +9,11 @@ const ticketUpdateLogs = async (req, res) => {
 
         const result = await fetchTicketUpdates(ticket_id);
 
-        res.status(200).send(...result);
+        res.status(200).send(result);
 
     } catch (error) {
 
-        logger.error(error, 'An issuel occured in ticketUpdateLogs');
+        logger.error(error, 'An issue occured in ticketUpdateLogs');
 
     }
 

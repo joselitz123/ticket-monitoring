@@ -4,29 +4,31 @@ import DoughnutGraph from './graphs/doughnutGraph';
 import PieGraphModal from './modals/pieGraphModal/pieGraphModal';
 import NotificationBoard from './notificationBoard/notificationBoard';
 import DismissConfModal from './modals/dismissConfModal/dismissConfModal';
-import TicketDetailsModal from './modals/ticketDetailsModal/ticketDetailsModal'
+import TicketDetailsModal from './modals/ticketDetailsModal/ticketDetailsModal';
+import TicketUpdateLogsModal from './modals/ticketUpdateLogsModal/ticketUpdateLogsModal';
 
-const HomeLayout = ()=>{
-		
+const HomeLayout = () => {
 
-		return (
-			<div className="content">
 
-				<div className="container-fluid" >
-					<TicketPriorityBoard />
+	return (
+		<div className="content">
 
-					<div className="row">
-						<DoughnutGraph />
-						<PieGraphModal />
-						<DismissConfModal />
-						<TicketDetailsModal />
-						<NotificationBoard />
+			<div className="container-fluid" >
+				<TicketPriorityBoard />
 
-					</div>
+				<div className="row">
+					<DoughnutGraph />
+					<PieGraphModal />
+					<DismissConfModal />
+					<TicketDetailsModal />
+					<TicketUpdateLogsModal />
+					<NotificationBoard />
+
 				</div>
 			</div>
-		)
-	}
+		</div>
+	)
+}
 
 
 

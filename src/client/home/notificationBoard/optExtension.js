@@ -16,6 +16,7 @@ class OptExtension extends Component {
         this.removeEvent = this.removeEvent.bind(this);
         this.openTicketInBrowser = this.openTicketInBrowser.bind(this);
         this.viewTicketDetailsHandler = this.viewTicketDetailsHandler.bind(this);
+        this.viewTicketUpdateLogsHandler = this.viewTicketUpdateLogsHandler.bind(this);
     }
 
     addEvent() {
@@ -68,9 +69,19 @@ class OptExtension extends Component {
 
     }
 
+    viewTicketUpdateLogsHandler(){
+
+        const { setTicketNo, ticket_no, fetchTicketUpdateLogs } = this.props;
+
+        fetchTicketUpdateLogs(ticket_no);
+
+        setTicketNo('');
+
+    }
+
     render() {
 
-        const { show, x_coord, y_coord, fetchTicketUpdateLogs, ticket_no } = this.props;
+        const { show, x_coord, y_coord } = this.props;
 
         show ? this.addEvent() : this.removeEvent();
 
@@ -84,7 +95,7 @@ class OptExtension extends Component {
             }}>
                 <ul>
                     <a href="#" onClick={this.viewTicketDetailsHandler}><li>View ticket details</li></a>
-                    <a href="#" onClick={() => fetchTicketUpdateLogs(ticket_no)}><li>View updates</li></a>
+                    <a href="#" onClick={this.viewTicketUpdateLogsHandler}><li>View updates</li></a>
                     <a href="#" onClick={this.openTicketInBrowser}><li>Open ticket in browser</li></a>
                 </ul>
             </div>

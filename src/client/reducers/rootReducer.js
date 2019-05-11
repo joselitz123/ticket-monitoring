@@ -8,6 +8,7 @@ import ticketNotifTableReducer from './home/tables/ticketNotifTable/ticketNotifT
 import ticketNotifOptExtension from './home/opt_extension/ticketNotif/ticketNotifReducer';
 import dismissConfReducer from './home/modals/dismissConfReducer/dismissConfReducer';
 import ticketDetailsReducer from './home/modals/ticketDetailsReducer/ticketDetailsReducer';
+import ticketUpdateLogs from './home/modals/ticketUpdateLogs/ticketUpdateLogs';
 
 export default combineReducers({
     setUserName: setUserName,
@@ -18,5 +19,6 @@ export default combineReducers({
     ticketNotifTableReducer: ticketNotifTableReducer,
     ticketNotifOptExtension: ticketNotifOptExtension,
     dismissConfReducer: dismissConfReducer,
-    ticketDetailsReducer: ticketDetailsReducer
+    ticketDetailsReducer: ticketDetailsReducer,
+    ticketUpdateLogs: ticketUpdateLogs
 });
