@@ -20,6 +20,11 @@ function socketSetup(io){
             module.exports.action_notification = socket;
         });//action notification board
 
+    io.of('/user_acc').on('connection', (socket) => {
+        logger.trace(`Client already listening to /user_acc via ${socket}`);
+        module.exports.user_acc = socket;
+    });//Name of the logged in user
+
 }
 
 module.exports = socketSetup;

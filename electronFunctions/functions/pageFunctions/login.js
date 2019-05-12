@@ -6,8 +6,6 @@ const path = require('path');
 module.exports = function (win){
     axios.get('http://localhost:3000/auth/login')
     .then((data)=>{
-    
-        win.webContents.send('loadUserInfo', data.data);
         
         const iconPath = path.join(__dirname,'../../../public/img/Logo_raw.ico');
         new Notification({
