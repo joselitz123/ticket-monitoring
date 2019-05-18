@@ -70,7 +70,7 @@ async function fetchNotification(){
                     _id: '$ticket_id',
                     notifications: {$push: {
                         notif:'$notification',
-                        notif_id: '$notif_id'
+                        notif_id: '$_id'
                     }},
                     ticket_details: {$first: '$ticket_details'}
                 }}

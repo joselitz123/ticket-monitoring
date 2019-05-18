@@ -13,8 +13,6 @@ const ticketDetailsComponent = async(req, res) => {
 
             const ticket = req.params.ticket_id;
 
-            console.log(ticket);
-
             const result = await ticketDetailQuery(ticket);
 
             res.status(200).send({ data: result });

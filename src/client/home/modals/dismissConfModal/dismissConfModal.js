@@ -5,6 +5,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
 import { toggleDismissConfirmationPromp, setSelectedNotifID } from '../../../actions/home/modals/dismisssConfModal/actions';
 import { populateDataTickets } from '../../../actions/home/ticketNotif/actions';
 import _ from 'lodash';
+import axios from 'axios';
 
 
 const DismissConfModal = ({ modalToggle, setSelectedNotifID, toggleDismissConfirmationPromp, ticketID, populateDataTickets, notifID, notifs }) => {
@@ -17,6 +18,8 @@ const DismissConfModal = ({ modalToggle, setSelectedNotifID, toggleDismissConfir
     }
 
     const updateNotificationData = () => {
+
+        axios.post(`http://localhost:3000/notifications/${notifID}/acknowledge`);
 
         let NotifInidexToRemove = 0;
 
